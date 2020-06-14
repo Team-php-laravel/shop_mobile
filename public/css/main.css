@@ -1,0 +1,1014 @@
+/*=========================================================
+  TABLE OF CONTENT
+  =========================================================
+
+  0. Import font
+  1. Default style
+  2. Text style
+  3. Component style
+  4. Navigation
+  5. Header
+  5. 
+
+*/
+
+/*========================================================= 
+  0. Import font 
+  =========================================================
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+
+/*========================================================= 
+  1. Default Style
+  =========================================================
+*/
+
+:root {
+  --white-color: #ffffff;
+  --light-white-color: #fff;
+  --black-color: #111111;
+  --dark-color: #252d35;
+  --gray-color: #666666;
+  --gray-bg: #f5f8fa;
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+  --green-color: #35ac39;
+  --font-poppins: Poppins, sanserif;
+
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  font-family: var(--font-poppins);
+  line-height: 1.5;
+}
+
+@media(max-width: 576px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+a {
+  text-decoration: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+
+[class*="-item"],
+[class*="_item"] {
+  list-style: none;
+}
+
+/*========================================================= 
+  2. Text style
+  =========================================================
+
+  2.1. Heading
+     - heading
+     - hero heading
+     - sub heading
+
+  2.2. Description
+
+  2.3  Title 
+     - title section
+     - title article
+     - title feature
+
+  2.4 Copyright
+
+*/
+
+
+/*========================================================= 
+  2.1 Heading text
+  =========================================================
+*/
+
+.heading-hero {
+  font-size: 5.6rem;
+  font-weight: 600;
+  color: var(--white-color);
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+}
+
+.heading {
+  font-size: 4.6rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  margin-bottom: 1.5rem;
+}
+
+.heading-sub {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 2.5rem;
+}
+
+.heading-sub::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 4rem;
+  background: #35ac39;
+  margin-top: 2rem;
+}
+
+@media(max-width:992px) {
+  .heading-hero {
+    font-size: 4.5rem;
+    text-align: left;
+    padding: 0;
+  }
+}
+
+@media(max-width:768px) {
+  .heading-hero {
+    font-size: 4rem;
+    text-align: left;
+    padding: 0;
+  }
+}
+
+/*========================================================= 
+  2.2 Description text
+  =========================================================
+*/
+
+.desc {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--gray-color);
+  margin-bottom: 3rem;
+}
+
+.desc-white {
+  color: var(--white-color);
+
+}
+
+@media(max-width:768px) {
+  .desc {
+    text-align: left;
+  }
+}
+
+/*========================================================= 
+  2.2 Title text
+  =========================================================
+*/
+
+.title-section {
+  font-size: 5rem;
+  font-weight: 500;
+  color: var(--dark-color);
+  margin-bottom: 3rem;
+}
+
+.title-feature {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--dark-color);
+  margin-bottom: 1.5rem;
+}
+
+.title-article {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #333333;
+}
+
+@media(max-width:992px) {
+  .title-section {
+    font-size: 4rem;
+  }
+}
+
+@media(max-width:768px) {
+  .title-section {
+    font-size: 3rem;
+  }
+}
+
+/*========================================================= 
+  2.4 Copyright text
+  =========================================================
+*/
+
+.copyright {
+  margin-top: 7rem;
+  padding-top: 4rem;
+  color: #333;
+  font-size: 1.5rem;
+  text-align: center;
+  border-top: 1px solid #3332;
+}
+
+/*==================== End style text ==================== */
+
+/*========================================================= 
+  3. Component style
+  =========================================================
+
+  3.1. Button
+     - button green
+     - button white
+  3.2. Circle canvas
+  3.3. Square canvas
+
+
+*/
+
+/*========================================================= 
+  3.1 Button
+  =========================================================
+*/
+
+.button {
+  padding: 1rem 3rem;
+  font-size: 1.4rem;
+  transition: 0.3s;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.button-green {
+  background: var(--green-color);
+  border: 2px solid var(--green-color);
+  color: var(--white-color);
+}
+
+.button-white {
+  background: var(--white-color);
+  border: 2px solid var(--white-color);
+  color: var(--dark-color);
+}
+
+/*========================================================= 
+  3.2 Circle canvas
+  =========================================================
+*/
+
+.circle-canvas {
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  margin-right: 1.8rem;
+  padding-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  background: var(--green-color);
+  font-size: 3rem;
+  padding: 2rem;
+  background-clip: content-box;
+}
+
+/*========================================================= 
+  3.2 Square canvas
+  =========================================================
+*/
+
+.square-canvas {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  background: var(--green-color);
+}
+
+
+/*==================== End style component ==================== */
+
+
+/*========================================================= 
+  4. Navigation
+  =========================================================
+*/
+
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: 11.4rem;
+}
+
+.nav__logo-link {
+  display: block;
+}
+
+.nav__logo-img {
+  width: 15rem;
+}
+
+.nav__link {
+  color: var(--white-color);
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0 1.4rem;
+}
+
+.nav__link.active {
+  color: var(--green-color);
+}
+
+.nav__icon-bar {
+  color: var(--white-color);
+  font-size: 2rem;
+  display: none;
+}
+
+@media(max-width:768px) {
+  .nav__icon-bar {
+    color: var(--white-color);
+    font-size: 2rem;
+    display: block;
+  }
+
+  .nav__list.d-flex {
+    display: none !important;
+  }
+}
+
+
+/*========================================================= 
+  5. Header
+  =========================================================
+*/
+
+.header {
+  background: url('http://cheaphostings.org/html/item-lalvai/lalvai/assets/img/bg/parallax-bg.jpg') no-repeat top /cover;
+  height: 100vh;
+  position: relative;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-bg);
+  z-index: 1;
+}
+
+.header__content {
+  position: relative;
+  z-index: 2;
+}
+
+/*========================================================= 
+  6. Brand
+  =========================================================
+*/
+
+.brand {
+  padding: 8rem 0;
+}
+
+@media(max-width: 992px) {
+  .brand__item {
+    margin-bottom: 1.4rem;
+  }
+}
+
+/*========================================================= 
+  7. Works
+  =========================================================
+*/
+
+.works {
+  padding: 8rem 0;
+  background: var(--gray-bg);
+}
+
+.section__head {
+  margin-bottom: 6rem;
+}
+
+.works__item {
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0px gray;
+  transition: transform 0.4s;
+}
+
+.works__item:hover {
+  box-shadow: 0px 40px 20px 20px #ebebeb;
+  transform: translateY(-20px);
+}
+
+.works__item-white {
+  background: white;
+}
+
+.works__item-green {
+  background: var(--green-color);
+  color: var(--white-color);
+}
+
+.works__item-green .title-feature,
+.works__item-green .desc {
+  color: var(--white-color);
+}
+
+.works__item-white i {
+  color: var(--green-color);
+}
+
+.works__item-img {
+  margin-bottom: 3rem;
+}
+
+.works__item-img i {
+  font-size: 4rem;
+}
+
+
+@media(max-width:992px) {
+
+  .works__item {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+}
+
+@media(max-width:767px) {
+
+  .works__item {
+    padding-left: 4rem;
+    padding-right: 4rem;
+    margin-bottom: 2rem;
+  }
+
+}
+
+/*========================================================= 
+  8. Business
+  =========================================================
+*/
+
+.business {
+  padding: 8rem 0;
+}
+
+.business__feature {
+  margin-bottom: 3rem;
+}
+
+.business__item {
+  font-size: 1.6rem;
+  color: var(--gray-color);
+  margin-bottom: 1rem;
+}
+
+.business__item i {
+  color: var(--green-color);
+  padding-right: 1rem;
+}
+
+@media(max-width:768px) {
+  .business__img {
+    font-size: 3rem;
+    padding-bottom: 3rem;
+    width: 80%;
+    margin: auto;
+  }
+}
+
+/*========================================================= 
+  9. Latest 
+  =========================================================
+*/
+
+.lastest__item {
+  padding: 8rem 0;
+}
+
+.lastest__item-img {
+  height: 30rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.lastest__item-show {
+  position: absolute;
+  top: 0;
+  display: flex;
+}
+
+.lastest__item-icon {
+  background: #35ac3985;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.lastest__item-icon i {
+  font-size: 2.8rem;
+  color: var(--white-color);
+  background-color: var(--green-color);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  padding-top: 8px;
+  position: absolute;
+  top: 0;
+  transform: translateY(50%);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.lastest__item-icon i:hover {
+  background-color: #ff3366;
+  cursor: pointer;
+}
+
+.lastest__item:hover .lastest__item-icon i {
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 1;
+
+}
+
+.lastest__item-img img {
+  transition: 0.4s;
+}
+
+.lastest__item:hover .lastest__item-img img {
+  transform: scale(1.5);
+}
+
+.lastest__item:hover .lastest__item-icon {
+  transform: scale(0.9);
+  opacity: 1;
+}
+
+.lastest__item-content {
+  padding: 1.5rem;
+}
+
+.lastest__item-link {
+  color: var(--green-color);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.owl-nav {
+  display: none;
+}
+
+.owl-dots {
+  display: none;
+}
+
+/*========================================================= 
+  10. Feedback 
+  =========================================================
+*/
+
+.feedback {
+  padding: 8rem;
+  background: url('http://cheaphostings.org/html/item-lalvai/lalvai/assets/img/bg/testimonial-bg.jpg') no-repeat center /cover;
+}
+
+.feeback__item-info {
+  text-align: center;
+}
+
+.feeback__item-img {
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
+  border: 6px solid gray;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+
+}
+
+.feedback__item-name {
+  font-size: 2rem;
+  color: var(--white-color);
+  font-weight: 800;
+}
+
+.feedback__item-job {
+  font-size: 1.6rem;
+  color: var(--white-color);
+  font-weight: 500;
+}
+
+.feedback__item-content .desc {
+  color: var(--white-color);
+  border: 1px solid #3332;
+  padding: 2rem;
+}
+
+.feedback__item-content {
+  border: 1px solid gray;
+  padding: 2rem;
+  position: relative;
+  margin-left: 3.5rem;
+}
+
+.feedback__item-content::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform: translateX(-100%);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 12px solid gray;
+}
+
+@media(max-width:768px) {
+  .feedback {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .feedback__item-content::before {
+    display: none;
+  }
+
+  .feedback__item-content {
+    margin-left: 0;
+  }
+}
+
+/*========================================================= 
+  11. Experts 
+  =========================================================
+*/
+
+.experts {
+  padding: 8rem 0;
+}
+
+.experts__head {
+  margin-bottom: 6rem;
+}
+
+.experts__item {
+  position: relative;
+  overflow: hidden;
+}
+
+.experts__item-content {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.experts__item-content::after {
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--overlay-bg);
+  position: absolute;
+  opacity: 0;
+  transition: 0.4s;
+  z-index: 0;
+}
+
+.experts__item-info {
+  position: absolute;
+  bottom: 35px;
+  left: -30px;
+  opacity: 0;
+  transition: 0.4s;
+  z-index: 1;
+}
+
+.experts__list-social {
+  margin: 0;
+}
+
+.experts__item-user {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  align-self: flex-end;
+}
+
+.experts__item-user span {
+  color: var(--white-color);
+  display: block;
+  text-align: left;
+}
+
+.experts__item-user-name {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.experts__item-user-job {
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+
+.experts__item-social {
+  display: none;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translate(-20px, 60px);
+  }
+
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.experts__plus {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
+.experts__item:hover .experts__item-content::after {
+  opacity: 1;
+}
+
+.experts__item:hover .experts__item-social {
+  display: flex;
+}
+
+.experts__item:hover .experts__item-info {
+  opacity: 1;
+  left: 0;
+}
+
+/*========================================================= 
+  12. Pricing 
+  =========================================================
+*/
+
+.pricing__item {
+  padding: 4rem 2rem;
+  border: 1px solid #3332;
+}
+
+.pricing_head {
+  margin-bottom: 6rem;
+}
+
+.pricing__item-name span {
+  color: var(--dark-color);
+  font-size: 2.6rem;
+  font-weight: 500;
+  position: relative;
+  display: inline-block;
+  padding: 2rem 0;
+}
+
+.pricing__item-name span:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 80%;
+  transform: translateX(-50%);
+  border-bottom: 8px dotted var(--green-color);
+
+}
+
+.pricing__item-price {
+  margin-top: 3rem;
+}
+
+.pricing__item-price .price {
+  font-size: 5rem;
+  display: block;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.pricing__item-price .month {
+  font-size: 1.4rem;
+}
+
+.pricing__item-option {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.option-item {
+  font-size: 1.4rem;
+  color: var(--gray-color);
+  margin-bottom: 1.4rem;
+}
+
+.pricing__item-get {
+  font-size: 1.4rem;
+  color: var(--white-color) !important;
+  border: none;
+}
+
+.pricing__item--green {
+  background: var(--green-color);
+  color: var(--white-color) !important;
+}
+
+.pricing__item--green .option-item {
+  color: var(--white-color);
+}
+
+
+/*========================================================= 
+  14. Features
+  =========================================================
+*/
+
+.features {
+  padding: 8rem 0;
+}
+
+.features__item {
+  margin-bottom: 3rem;
+}
+
+/*========================================================= 
+  15. Blog 
+  =========================================================
+*/
+
+.blog {
+  padding: 8rem 0;
+  background: var(--gray-bg);
+}
+
+.blog__head {
+  margin-bottom: 6rem;
+}
+
+.blog__item {
+  background: var(--white-color);
+  border-radius: 5px;
+}
+
+.blog__item-img {
+  position: relative;
+}
+
+.blog-cate {
+  position: absolute;
+  bottom: 1rem;
+  left: 2rem;
+}
+
+.blog-cate.button-green {
+  font-size: 1.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+.blog__item-content {
+  padding: 3rem 2rem;
+}
+
+.blog__item-info {
+  color: var(--green-color);
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+}
+
+.blog__item-footer a {
+  font-size: 1.7rem;
+}
+
+/*========================================================= 
+  16. Contact 
+  =========================================================
+*/
+
+.contact {
+  background: url('http://cheaphostings.org/html/item-lalvai/lalvai/assets/img/bg/contact-bg.jpg') no-repeat center /cover;
+  padding: 8rem 0;
+}
+
+.contact__head {
+  color: var(--white-color);
+  margin-bottom: 6rem;
+}
+
+.contact__head .heading,
+.contact__head .desc {
+  color: var(--white-color);
+}
+
+.contact__form {
+  border: 4px solid var(--green-color);
+  padding: 4rem;
+  border-radius: 5px;
+  background: var(--white-color);
+}
+
+input,
+textarea {
+  width: 100%;
+  height: 40px;
+  font-size: 1.6rem;
+  border-radius: 30px;
+  border: none;
+  border: 1px solid #3332;
+  padding: 20px;
+  margin-bottom: 2rem;
+  text-transform: capitalize;
+  outline: none;
+}
+
+textarea {
+  height: auto;
+}
+
+/*========================================================= 
+  17. Footer 
+  =========================================================
+*/
+
+.footer {
+  padding: 8rem 0 6rem;
+}
+
+.footer__item {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.footer__list-item {
+  font-size: 1.6rem;
+  color: var(--gray-color);
+  margin-bottom: 0.5rem;
+}
+
+.footer__item-input {
+  position: relative;
+}
+
+.footer__item-input input {
+  border-radius: 4px;
+  height: 6rem;
+}
+
+.footer__submit {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  right: 20px;
+}
+
+.footer__submit button {
+  border: none;
+  background: transparent;
+
+}
+
+.footer__submit i {
+  color: var(--green-color);
+}
+
+.footer i {
+  font-size: 1.6rem;
+}
+
+.footer__social-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #3332;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

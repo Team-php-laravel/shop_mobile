@@ -1,0 +1,21 @@
+h1, h2, h3, h4, h5, h6, p {
+    padding: 0;
+    margin: 0;
+}
+
+a.nav-link > i {
+    width: 25px;
+}
+
+.callout-top {
+    border-radius: .25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
+    background-color: #fff;
+    border-top: 5px solid #e9ecef;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.callout-top.callout-top-danger {
+    border-top-color: #007bff;
+}
