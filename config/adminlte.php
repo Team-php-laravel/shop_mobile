@@ -167,7 +167,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'admin',
+    'dashboard_url' => 'admin/order',
 
     'logout_url' => 'logout',
 
@@ -220,7 +220,7 @@ return [
         ],
         [
             'text' => 'Trang chủ',
-            'url' => 'admin',
+            'url' => 'admin/order',
             'icon' => 'fas fa-home',
             'label' => 4,
             'label_color' => 'success',
