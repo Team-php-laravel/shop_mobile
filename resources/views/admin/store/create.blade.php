@@ -32,28 +32,34 @@
         <form action="/admin/store" method="POST">
             @csrf
             <div class="form-group">
-                <label for="">Khách hàng:</label>
-                <select class="form-control" name="khach_hang_id" required>
+                <label for="">Nhà cung cấp:</label>
+                <select class="form-control" name="ncc_id" required>
                     <option value="">-------------chọn--------------</option>
                     @foreach($kh as $item)
-                        <option value="{{$item->id}}">{{$item->ten_kh}} - {{$item->dien_thoai}}</option>
+                        <option value="{{$item->id}}">{{$item->ten_ncc}} - {{$item->ms_thue}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Sản phẩm:</label>
-                <select class="form-control" name="san_pham_id" required>
+                <select class="form-control" name="sp_id" required>
                     <option value="">-------------chọn--------------</option>
                     @foreach($sp as $item)
-                        <option value="{{$item->id}}">{{$item->ten_sp}} - {{$item->sale}}% - {{_manny($item->gia)}}
+                        <option value="{{$item->id}}">{{$item->ten_sp}} - {{$item->giam_gia}}% - {{_manny($item->gia)}}
                             VNĐ
                         </option>
                     @endforeach
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="">Đơn giá:</label>
+                <input value="0" name="gia" type="number" class="form-control" required>
+            </div>
+
             <div class="form-group">
                 <label for="">Số lượng nhập:</label>
-                <input value="1" name="sl_nhap" type="number" class="form-control" required>
+                <input value="1" name="so_luong" type="number" class="form-control" required>
             </div>
 
             <div class="text-center mt-4">

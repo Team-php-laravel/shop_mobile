@@ -51,13 +51,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
-        if ($request->hasFile('avatar')) {
-            $image = Str::random() . '.' . $request->avatar->getClientOriginalExtension();
-            $request->avatar->move("uploads/user/", $image);
+        if ($request->hasFile('hinh_anh')) {
+            $image = Str::random() . '.' . $request->hinh_anh->getClientOriginalExtension();
+            $request->hinh_anh->move("uploads/user/", $image);
         }
 
         $data = collect($request->all())->merge([
-            'avatar' => $request->hasFile('avatar') ? $image : null,
+            'hinh_anh' => $request->hasFile('hinh_anh') ? $image : null,
             'password' => '123456',
             'trang_thai' => 0
         ])->toArray();
@@ -122,16 +122,16 @@ class UserController extends Controller
             ])->toArray();
             $user->update($data);
             return redirect('admin/user')->with("message", "Đổi trạng thái thành công !");
-        } elseif ($request->hasFile('avatar')) {
-            $image = Str::random() . '.' . $request->avatar->getClientOriginalExtension();
-            $request->avatar->move("uploads/user/", $image);
+        } elseif ($request->hasFile('hinh_anh')) {
+            $image = Str::random() . '.' . $request->hinh_anh->getClientOriginalExtension();
+            $request->hinh_anh->move("uploads/user/", $image);
             $data = collect($request->all())->merge([
-                'avatar' => $request->hasFile('avatar') ? $image : null,
+                'hinh_anh' => $request->hasFile('hinh_anh') ? $image : null,
                 'chuc_vu' => $user->chuc_vu == 1 ? 1 : $request->chuc_vu
             ])->toArray();
         } else {
             $data = collect($request->all())->merge([
-                'avatar' => $user->avatar,
+                'hinh_anh' => $user->hinh_anh,
                 'chuc_vu' => $user->chuc_vu == 1 ? 1 : $request->chuc_vu
             ])->toArray();
         }

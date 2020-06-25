@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\khach_hang;
+use App\ncc;
 use App\nhap_kho;
 use App\san_pham;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class storeController extends Controller
      */
     public function index()
     {
-        $store = nhap_kho::with('khach_hang', 'san_pham')->get();
+        $store = nhap_kho::with('ncc', 'san_pham')->get();
         return view('admin.store.index', compact('store'));
     }
 
@@ -33,8 +34,8 @@ class storeController extends Controller
      */
     public function create()
     {
-        $kh = khach_hang::where('loai_kh', 0)->get();
-        $sp = san_pham::where('trang_thai', 1)->get();
+        $kh = ncc::all();
+        $sp = san_pham::all();
         return view('admin.store.create', compact('kh', 'sp'));
     }
 
@@ -46,8 +47,8 @@ class storeController extends Controller
      */
     public function store(Request $request)
     {
-        $sp = san_pham::find($request->san_pham_id);
-        $sp->update(['so_luong' => $sp->so_luong + $request->sl_nhap]);
+        $sp = san_pham::find($request->sp_id);
+        $sp->update(['so_luong' => $sp->so_luong + $request->so_luong]);
         nhap_kho::create($request->all());
         return redirect('admin/store')->with("message", "Nhập sản phẩm thành công !");
     }
@@ -61,8 +62,8 @@ class storeController extends Controller
     public function show($id)
     {
         //
-        $kh = khach_hang::where('loai_kh', 0)->get();
-        $sp = san_pham::where('trang_thai', 1)->get();
+        $kh = ncc::get();
+        $sp = san_pham::get();
         $store = nhap_kho::find($id);
         return view('admin.store.update', compact('store', 'kh', 'sp'));
     }
@@ -89,11 +90,11 @@ class storeController extends Controller
     {
         //
         $store = nhap_kho::find($id);
-        $sp = san_pham::find($request->san_pham_id);
-        if ($sp->so_luong - $store->sl_nhap + $request->sl_nhap < 0) {
+        $sp = san_pham::find($request->sp_id);
+        if ($sp->so_luong - $store->so_luong + $request->so_luong < 0) {
             return redirect('admin/store')->with("error", "Thất bại, sản phẩm trong kho không đủ!");
         }
-        $sp->update(['so_luong' => $sp->so_luong - $store->sl_nhap + $request->sl_nhap]);
+        $sp->update(['so_luong' => $sp->so_luong - $store->so_luong + $request->so_luong]);
         $store->update($request->all());
         return redirect('admin/store')->with("message", "Cập nhật loại sản phẩm thành công !");
     }

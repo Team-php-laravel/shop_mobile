@@ -50,8 +50,7 @@ class ProductController extends Controller
             $request->hinh_anh->move("uploads/product/", $image);
         }
         $data = collect($request->all())->merge([
-            'hinh_anh' => $request->hasFile('hinh_anh') ? $image : null,
-            'thong_so' => $request->man_hinh . ',' . $request->hdh . ';' . $request->c_sau . ';' . $request->c_truoc . ';' . $request->cpu . ';' . $request->ram . ';' . $request->store . ';' . $request->the_nho . ';' . $request->sim . ';' . $request->pin,
+            'hinh_anh' => $request->hasFile('hinh_anh') ? $image : null
         ])->toArray();
         san_pham::create($data);
 
@@ -80,7 +79,6 @@ class ProductController extends Controller
     public function edit($id)
     {
         $sanpham = san_pham::find($id);
-        $sanpham->thong_so = explode(';', $sanpham->thong_so);
         return view('admin.product.update', compact('sanpham'));
     }
 
@@ -95,20 +93,15 @@ class ProductController extends Controller
     {
         //
         $sanpham = san_pham::findOrFail($id);
-        if (isset($request->trang_thai)) {
-            $sanpham->update(['trang_thai' => $request->trang_thai]);
-            return redirect('admin/product/' . $sanpham->loai_id)->with("message", "Đổi trạng thái thành công !");
-        } elseif ($request->hasFile('hinh_anh')) {
+        if ($request->hasFile('hinh_anh')) {
             $image = Str::random() . '.' . $request->hinh_anh->getClientOriginalExtension();
             $request->hinh_anh->move("uploads/product/", $image);
             $data = collect($request->all())->merge([
                 'hinh_anh' => $request->hasFile('hinh_anh') ? $image : null,
-                'thong_so' => $request->man_hinh . ';' . $request->hdh . ';' . $request->c_sau . ';' . $request->c_truoc . ';' . $request->cpu . ';' . $request->ram . ';' . $request->store . ';' . $request->the_nho . ';' . $request->sim . ';' . $request->pin,
             ])->toArray();
         } else {
             $data = collect($request->all())->merge([
                 'hinh_anh' => $sanpham->hinh_anh,
-                'thong_so' => $request->man_hinh . ';' . $request->hdh . ';' . $request->c_sau . ';' . $request->c_truoc . ';' . $request->cpu . ';' . $request->ram . ';' . $request->store . ';' . $request->the_nho . ';' . $request->sim . ';' . $request->pin,
             ])->toArray();
         }
 

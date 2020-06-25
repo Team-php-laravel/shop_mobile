@@ -34,29 +34,33 @@
             @csrf
             <div class="form-group">
                 <label for="">Khách hàng:</label>
-                <select class="form-control" name="khach_hang_id" required>
+                <select class="form-control" name="ncc_id" required>
                     <option value="">-------------chọn--------------</option>
                     @foreach($kh as $item)
-                        <option {{$store->khach_hang_id == $item->id ? 'selected': ''}} value="{{$item->id}}">{{$item->ten_kh}}
-                            - {{$item->dien_thoai}}</option>
+                        <option {{$store->ncc_id == $item->id ? 'selected': ''}} value="{{$item->id}}">{{$item->ten_ncc}}
+                            - {{$item->ms_thue}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label for="">Sản phẩm:</label>
-                <select class="form-control" name="san_pham_id" required>
+                <select class="form-control" name="sp_id" required>
                     <option value="">-------------chọn--------------</option>
                     @foreach($sp as $item)
-                        <option {{$store->san_pham_id == $item->id ? 'selected': ''}} value="{{$item->id}}">{{$item->ten_sp}}
-                            - {{$item->sale}}% - {{_manny($item->gia)}}
+                        <option {{$store->sp_id == $item->id ? 'selected': ''}} value="{{$item->id}}">{{$item->ten_sp}}
+                            - {{$item->giam_gia}}% - {{_manny($item->gia)}}
                             VNĐ
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
+                <label for="">Đơn giá:</label>
+                <input value="{{$store->gia}}" name="so_luong" type="number" class="form-control" required>
+            </div>
+            <div class="form-group">
                 <label for="">Số lượng mua:</label>
-                <input value="{{$store->sl_nhap}}" name="sl_nhap" type="number" class="form-control" required>
+                <input value="{{$store->so_luong}}" name="so_luong" type="number" class="form-control" required>
             </div>
 
             <div class="text-center mt-4">

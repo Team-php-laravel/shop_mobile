@@ -30,7 +30,7 @@
     @endif
     <div class="callout-top callout-top-danger col-md-12 table-responsive">
         <table id="data-table" align="center" width="100%"
-               class="table table-hover table-striped table-bstoreed bstore text-center">
+               class="table table-hover table-striped table-bordered border text-center">
             <thead>
             <tr class="bg-primary">
                 <th>STT</th>
@@ -49,12 +49,12 @@
                 <tr>
                     <td>{{$key+1}}</td>
                     <td>
-                        {{$val->khach_hang->ten_kh}}
+                        {{$val->ncc->ten_ncc}}
                     </td>
                     <td>{{$val->san_pham->ten_sp}}</td>
                     <td>{{date_format(date_create($val['created_at']), "H:i d/m/yy")}}</td>
-                    <td>{{$val->sl_nhap}}</td>
-                    <td>{{_manny($val->sl_nhap * $val->san_pham->gia)}}đ</td>
+                    <td>{{$val->so_luong}}</td>
+                    <td>{{_manny($val->so_luong * $val->san_pham->gia)}} VNĐ</td>
                     <td>
                         <button class="btn btn-sm btn-warning"
                                 onclick="location.href = 'store/{{$val->id}}'">Cập nhật

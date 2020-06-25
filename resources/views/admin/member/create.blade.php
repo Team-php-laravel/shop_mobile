@@ -4,8 +4,8 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h5><a href="#" onclick="window.history.back();">Quản lý {{$_GET['id'] == 1 ? 'khách hàng':'nhà cung cấp'}}</a> /
-        Thêm {{$_GET['id'] == 1 ? 'khách hàng':'nhà cung cấp'}}</h5>
+    <h5><a href="#" onclick="window.history.back();">Quản lý khách hàng</a> /
+        Thêm khách hàng</h5>
 @stop
 
 @section('content')
@@ -13,12 +13,9 @@
         <form action="/admin/member" method="POST">
             @csrf
             <div class="form-group">
-                <label for="title">Tên {{$_GET['id'] == 1 ? 'khách hàng':'nhà cung cấp'}}:</label>
+                <label for="title">Tên khách hàng:</label>
                 <input type="text"
                        class="form-control" name="ten_kh" aria-describedby="helpId" required>
-                <input type="text"
-                       class="form-control d-none" name="loai_kh" value="{{$_GET['id']}}" aria-describedby="helpId"
-                       required>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
@@ -29,7 +26,7 @@
                 <div class="form-group col-md-6">
                     <label for="title">Điện thoại:</label>
                     <input type="text"
-                           class="form-control" name="dien_thoai" aria-describedby="helpId" placeholder="" required>
+                           class="form-control" name="sdt" aria-describedby="helpId" placeholder="" required>
                 </div>
             </div>
             <div class="form-group">

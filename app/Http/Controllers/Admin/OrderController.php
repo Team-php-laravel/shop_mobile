@@ -23,7 +23,8 @@ class orderController extends Controller
      */
     public function index()
     {
-        $order = hoa_don::with('khach_hang', 'user', 'san_pham')->get();
+        $order = hoa_don::with('khach_hang', 'user')->get();
+        
         return view('admin.order.index', compact('order'));
     }
 

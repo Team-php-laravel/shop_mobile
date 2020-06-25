@@ -8,16 +8,16 @@ class nhap_kho extends Model
 {
     //
     protected $table = "nhap_kho";
-    protected $fillable = ['khach_hang_id', 'san_pham_id', 'sl_nhap'];
-    public $timestamps = true;
+    protected $fillable = ['ncc_id', 'sp_id', 'gia', 'so_luong'];
+    public $timestamps = false;
 
-    public function khach_hang()
+    public function ncc()
     {
-        return $this->belongsTo(\App\khach_hang::class, 'khach_hang_id', 'id');
+        return $this->belongsTo(\App\ncc::class, 'ncc_id', 'id');
     }
 
     public function san_pham()
     {
-        return $this->belongsTo(\App\san_pham::class, 'san_pham_id', 'id');
+        return $this->belongsTo(\App\san_pham::class, 'sp_id', 'id');
     }
 }

@@ -4,7 +4,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h5>Danh sách {{$id == 1 ? 'khách hàng':'nhà cung cấp'}}</h5>
+    <h5>Danh sách khách hàng</h5>
 @stop
 
 @section('content')
@@ -34,13 +34,13 @@
             <thead>
             <tr class="bg-primary">
                 <th>STT</th>
-                <th>Tên {{$id ==1 ? 'khách hàng':'nhà cung cấp'}}</th>
+                <th>Tên khách hàng</th>
                 <th>Email</th>
                 <th>Điện thoại</th>
                 <th>Địa chỉ</th>
                 <th style="width: 150px">
                     <button class="btn btn-sm btn-success"
-                            onclick="location.href = 'create?id={{$id}}'">
+                            onclick="location.href = 'member/create'">
                         +Thêm
                     </button>
                 </th>
@@ -54,18 +54,18 @@
                         {{$val->ten_kh}}
                     </td>
                     <td>{{$val->email}}</td>
-                    <td>{{$val->dien_thoai}}</td>
+                    <td>{{$val->sdt}}</td>
                     <td>{{$val->dia_chi}}</td>
 
                     <td>
                         <button class="btn btn-sm btn-warning"
-                                onclick="location.href = '{{$val->id}}/edit?id={{$id}}'">Cập nhật
+                                onclick="location.href = 'member/{{$val->id}}'">Cập nhật
                         </button>
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
                             Xóa
                         </button>
-                        <form id="delete{{$val->id}}" action="{{$val->id}}" method="POST">
+                        <form id="delete{{$val->id}}" action="member/{{$val->id}}" method="POST">
                             @method('DELETE')
                             @csrf
                         </form>

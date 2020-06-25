@@ -43,7 +43,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         khach_hang::create($request->all());
-        return redirect('admin/member/' . $request->loai_kh)->with("message", "Thêm thành công !");
+        return redirect('admin/member/')->with("message", "Thêm thành công !");
     }
 
     /**
@@ -55,8 +55,8 @@ class MemberController extends Controller
     public function show($id)
     {
         //
-        $member = khach_hang::where('loai_kh', $id)->get();
-        return view('admin.member.index', compact('member', 'id'));
+        $member = khach_hang::find($id);
+        return view('admin.member.update', compact('member'));
     }
 
     /**

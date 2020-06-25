@@ -21,8 +21,14 @@ class CatController extends Controller
      */
     public function index()
     {
-        $cat = loai_sp::all();
-        return view('admin.cat.index', compact('cat'));
+        if (isset(\request()->chil)) {
+            $cat = loai_sp::where('loai_id', \request()->chil)->get();
+            $label = loai_sp::find(\request()->chil);
+            return view('admin.cat.index', compact('cat', 'label'));
+        } else {
+            $cat = loai_sp::with('children')->where('loai_id', 0)->get();
+            return view('admin.cat.index', compact('cat'));
+        }
     }
 
     /**
@@ -32,7 +38,12 @@ class CatController extends Controller
      */
     public function create()
     {
-        return view('admin.cat.create');
+        if (isset(\request()->chil)) {
+            $cat = loai_sp::with('children')->where('loai_id', 0)->get();
+            return view('admin.cat.create', compact('cat'));
+        } else {
+            return view('admin.cat.create');
+        }
     }
 
     /**
@@ -43,15 +54,13 @@ class CatController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('hinh_anh')) {
-            $image = Str::random() . '.' . $request->hinh_anh->getClientOriginalExtension();
-            $request->hinh_anh->move("uploads/cat/", $image);
+        loai_sp::create($request->all());
+        if (isset(\request()->chil)) {
+            return redirect('admin/cat?chil=' . $request->loai_id)->with("message", "Thêm loại sản phẩm thành công !");
+        } else {
+            return redirect('admin/cat')->with("message", "Thêm loại sản phẩm thành công !");
         }
-        $data = collect($request->all())->merge([
-            'hinh_anh' => $request->hasFile('hinh_anh') ? $image : null,
-        ])->toArray();
-        loai_sp::create($data);
-        return redirect('admin/cat')->with("message", "Thêm loại sản phẩm thành công !");
+
     }
 
     /**
@@ -63,8 +72,14 @@ class CatController extends Controller
     public function show($id)
     {
         //
-        $cat = loai_sp::findOrFail($id);
-        return view('admin.cat.update', compact('cat'));
+        if (isset(\request()->chil)) {
+            $listcat = loai_sp::with('children')->where('loai_id', 0)->get();
+            $cat = loai_sp::findOrFail($id);
+            return view('admin.cat.update', compact('cat', 'listcat'));
+        } else {
+            $cat = loai_sp::findOrFail($id);
+            return view('admin.cat.update', compact('cat'));
+        }
     }
 
     /**
@@ -87,18 +102,13 @@ class CatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        if ($request->hasFile('hinh_anh')) {
-            $image = Str::random() . '.' . $request->hinh_anh->getClientOriginalExtension();
-            $request->hinh_anh->move("uploads/cat/", $image);
-        }
         $cat = loai_sp::find($id);
-        $data = collect($request->all())->merge([
-            'hinh_anh' => $request->hasFile('hinh_anh') ? $image : $cat->hinh_anh,
-        ])->toArray();
-
-        $cat->update($data);
-        return redirect('admin/cat')->with("message", "Cập nhật loại sản phẩm thành công !");
+        $cat->update($request->all());
+        if (isset(\request()->chil)) {
+            return redirect('admin/cat?chil=' . $request->loai_id)->with("message", "Cập nhật loại sản phẩm thành công !");
+        } else {
+            return redirect('admin/cat')->with("message", "Cập nhật loại sản phẩm thành công !");
+        }
     }
 
     /**

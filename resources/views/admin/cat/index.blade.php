@@ -4,7 +4,8 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h5>Danh mục loại sản phẩm</h5>
+    <h5>Danh mục loại sản phẩm<a href="#" onclick="window.history.back();"
+                                 class="text-info">: {{isset($label) ? $label->ten_loai:''}}</a></h5>
 @stop
 
 @section('content')
@@ -35,9 +36,14 @@
             <tr class="bg-primary">
                 <th>STT</th>
                 <th>Tên danh mục</th>
-                <th style="width: 100px">Hình ảnh</th>
                 <th style="width: 150px">
-                    <button class="btn btn-sm btn-success" onclick="location.href = 'cat/create'">+Thêm</button>
+                    @if(isset($_GET['chil']))
+                        <button class="btn btn-sm btn-success" onclick="location.href = 'cat/create?chil=create'">
+                            +Thêm
+                        </button>
+                    @else
+                        <button class="btn btn-sm btn-success" onclick="location.href = 'cat/create'">+Thêm</button>
+                    @endif
                 </th>
             </tr>
             </thead>
@@ -49,15 +55,22 @@
                         {{$val->ten_loai}}
                     </td>
                     <td>
-                        <img class="w-100" src="/uploads/cat/{{$val->hinh_anh}}" alt="Ảnh">
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary"
-                                onclick="location.href = 'product/{{$val->id}}'">xem
-                        </button>
-                        <button class="btn btn-sm btn-warning"
-                                onclick="location.href = 'cat/{{$val->id}}'">Cập nhật
-                        </button>
+                        @if(isset($_GET['chil']))
+                            <button class="btn btn-sm btn-outline-primary"
+                                    onclick="location.href = '/admin/product/{{$val->id}}'">xem
+                            </button>
+                            <button class="btn btn-sm btn-warning"
+                                    onclick="location.href = 'cat/{{$val->id}}?chil={{$val->id}}'">Cập nhật
+                            </button>
+                        @else
+                            <button class="btn btn-sm btn-outline-primary"
+                                    onclick="location.href = '?chil={{$val->id}}'">xem
+                            </button>
+                            <button class="btn btn-sm btn-warning"
+                                    onclick="location.href = 'cat/{{$val->id}}'">Cập nhật
+                            </button>
+                        @endif
+
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
                             Xóa

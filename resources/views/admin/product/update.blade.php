@@ -52,78 +52,19 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="">Tiêu chuẩn(sao):</label>
-                    <input type="number" name="sao" value="{{$sanpham->sao}}" class="form-control" placeholder=""
-                           aria-describedby="helpId" required>
+                    <label for="">Màu sắc:</label>
+                    <input type="text" name="mau_sac" value="{{$sanpham->mau_sac}}" class="form-control" placeholder=""
+                           aria-describedby="helpId">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="">Sale:</label>
-                    <input type="number" name="sale" value="{{$sanpham->sale}}" class="form-control" placeholder=""
+                    <input type="number" name="sale" value="{{$sanpham->giam_gia}}" class="form-control" placeholder=""
                            aria-describedby="helpId" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="">Đơn giá(VNĐ):</label>
                     <input type="number" name="gia" value="{{$sanpham->gia}}" class="form-control" placeholder=""
                            aria-describedby="helpId" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 text-center">
-                    <label>THÔNG SỐ KỸ THUẬT</label>
-                </div>
-                <div class="col-md-12">
-                    <table class="w-100">
-                        <tr>
-                            <td>Màn hình:</td>
-                            <td><input type="text" value="{{$sanpham->thong_so[0]}}" name="man_hinh"
-                                       class="form-control" required></td>
-                        </tr>
-                        <tr>
-                            <td>Hệ điều hành:</td>
-                            <td><input type="text" value="{{$sanpham->thong_so[1]}}" name="hdh" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>Camera sau:</td>
-                            <td><input type="text" value="{{$sanpham->thong_so[2]}}" name="c_sau" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>Camera trước:</td>
-                            <td><input type="text" value="{{$sanpham->thong_so[3]}}" name="c_truoc" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>CPU:</td>
-                            <td><input type="text" name="cpu" value="{{$sanpham->thong_so[4]}}" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>RAM:</td>
-                            <td><input type="text" name="ram" value="{{$sanpham->thong_so[5]}}" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>Bộ nhớ trong:</td>
-                            <td><input type="text" name="store" value="{{$sanpham->thong_so[6]}}" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>Thẻ nhớ:</td>
-                            <td><input type="text" name="the_nho" value="{{$sanpham->thong_so[7]}}" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>Thẻ SIM:</td>
-                            <td><input type="text" name="sim" value="{{$sanpham->thong_so[8]}}" class="form-control"
-                                       required></td>
-                        </tr>
-                        <tr>
-                            <td>Dung lượng pin:</td>
-                            <td><input type="text" name="pin" value="{{$sanpham->thong_so[9]}}" class="form-control"
-                                       required></td>
-                        </tr>
-                    </table>
                 </div>
             </div>
             <div class="text-center mt-4">

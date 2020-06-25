@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PageController@home');
 Route::get('/home', 'PageController@home');
+Route::get('/sale', 'PageController@sale');
+Route::get('/cat/{id}', 'PageController@cat');
+Route::get('/news', 'PageController@news');
+Route::get('/new-detail/{id}', 'PageController@newDetail');
 Route::post('/order', 'PageController@order');
 Route::get('/detail/{id}', 'PageController@detail');
 
@@ -42,6 +46,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Admin
     Route::resource('cat', 'CatController');
     Route::resource('product', 'ProductController');
     Route::resource('member', 'MemberController');
+    Route::resource('ncc', 'NccController');
     Route::resource('order', 'OrderController');
     Route::resource('store', 'StoreController');
     Route::post('hotel/{id}/service', 'HotelController@service');

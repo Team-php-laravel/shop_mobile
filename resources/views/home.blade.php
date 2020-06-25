@@ -1,75 +1,123 @@
-@extends('layout.app')
-@section('content')
-    <!-- SECTION EXPERTS -->
-    <style>
-        .experts__item-content::after {
-            border-radius: 25px;
-        }
+@extends('layout.index')
 
-        .pagination {
-            float: right;
-        }
-    </style>
-    <section id="team" class="experts p-0">
-        <div class="container">
-            <div class="row">
-                <h2>{{isset($_GET['cat']) ? 'Danh mục: '.$_GET['search']: (isset($_GET['search']) && $_GET['search'] != '' ?'Tìm kiếm: '. $_GET['search']:'ĐIỆN THOẠI NỔI BẬT NHẤT')}}</h2>
-            </div>
-            <div class="row border">
-                @foreach($san_pham as $val)
-                    <div class="col-12 col-md-3 py-4">
-                        <a href="/detail/{{$val->id}}">
-                            <div class="experts__item">
-                                <div class="experts__item-img">
-                                    <img class="img-fluid"
-                                         src="/uploads/product/{{$val->hinh_anh}}"
-                                         alt="">
-                                </div>
-                                <div class="experts__item-content">
-                                    <div class="experts__item-info d-flex">
-                                        <ul class="experts__list-social">
-                                            <li class="experts__item-social square-canvas">
-                                                <i class="fa fa-facebook" aria-hidden="true"></i>
-                                            </li>
-                                            <li class="experts__item-social square-canvas">
-                                                <i class="fa fa-twitter" aria-hidden="true"></i>
-                                            </li>
-                                            <li class="experts__item-social square-canvas">
-                                                <i class="fa fa-google-plus" aria-hidden="true"></i>
-                                            </li>
-                                            <li class="experts__item-social square-canvas">
-                                                <i class="fa fa-youtube" aria-hidden="true"></i>
-                                            </li>
-                                        </ul>
-                                        <div class="experts__item-user text-center">
-                                            <span class="experts__item-user-name text-center">{{$val->ten_sp}}</span>
-                                            @for($i = 0; $i < $val->sao; $i++)
-                                                <i class="fa fa-star text-warning" aria-hidden="true"></i>
-
-                                            @endfor
-                                            @for($i = 0; $i < (5-$val->sao); $i++)
-                                                <i class="far fa-star text-warning"></i>
-                                            @endfor
-                                            <span class="experts__item-user-job text-center">$ - {{_manny($val->gia)}}
-                                                VNĐ <i class="text-danger">-{{$val->sale}}%</i></span>
-                                            <span class="experts__item-user-job">{{$val->mota}}</span>
-                                        </div>
-                                    </div>
-                                    <span class="experts__plus square-canvas">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-            <div class="row">
-                <div class="col-12 p-0 my-2" style="font-size: 15px;">
-                    {{ $san_pham->links() }}
+@section('main')
+    <section class="container t3-mainbody">
+        <div class="row">
+            <div class="main-content">
+                <div class="breadcrumbs span12">
+                    <h3 class="module-title">Sản phẩm nổi bật</h3>
+                    <ul class="nav menudanhmuc menuhinhanh trangchu" style="display: flow-root;overflow: hidden">
+                        <li class="item-5454">
+                            <a href="/detail/1">
+                                <img src="./assets/images/dong-ho-thong-minh-icon.png" alt="Smartwatch"/>
+                                <span class="image-title">Smartwatch</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <!-- MAIN CONTENT -->
+                <div class="span12">
+                    <h3 class="module-title">Sản phẩm mới nhất</h3>
+                </div>
+                <div id="t3-content" class="t3-content span12">
+                    <div class="Front_VM2">
+                        <div class="latest-view">
+                            <div id="product_list" class="grid layout product-box">
+                                <ul id="slider" class="vmproduct">
+                                    @foreach($sp_new as $item)
+                                        @php
+                                            if($item->giam_gia == 0){
+                                                $gia = $item->gia;
+                                            }else{
+                                                $gia = $item->gia - ($item->gia * $item->giam_gia / 100);
+                                            }
+                                        @endphp
+                                        <li>
+                                            <div class="prod-row">
+                                                <div class="disc">
+                                                    <div class="browseImage ">
+                                                        <a href="/detail/{{$item->id}}">
+                                                            <img
+                                                                    src="./uploads/product/{{$item->hinh_anh}}"
+                                                                    alt="p-lưng-Bee-ring-iPhone-11-Pro-Max-av75"
+                                                                    class="browseProductImage featuredProductImage"
+                                                                    id="Img_to_Js_4475" border="0"/>
+                                                        </a>
+                                                    </div>
+                                                    <div class="Title">
+                                                        <a href="/detail/{{$item->id}}"
+                                                           title="Ốp lưng Bee ring iPhone 11 Pro">{{$item->ten_sp}}</a>
+                                                    </div>
+                                                    <div class="product-price marginbottom12">Giá:
+                                                        @if($item->giam_gia != 0)
+                                                            <span class="PricebasePriceWithTax">{{_manny($item->gia)}}
+                                                                ₫</span>
+                                                            <span class="PricesalesPrice">-{{$item->giam_gia}}%</span>
+                                                        @endif
+                                                        <div class="PricesalesPrice" style="display : block;"><span
+                                                                    class="PricesalesPrice">{{_manny($gia."")}} ₫</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //MAIN CONTENT -->
             </div>
         </div>
     </section>
 
+
+    <!-- SPOTLIGHT 2 -->
+    <section class="container t3-sl t3-sl-2 pad-boxed">
+        <!-- SPOTLIGHT -->
+        <div class="t3-spotlight t3-spotlight-2  row">
+            <div class="span12 item-first" data-default="span12">
+                <div class="t3-module moduletintucmoinhat" id="Mod805">
+                    <div class="module-inner">
+                        <h3 class="module-title"><span>Tin tức Gomhang.vn</span></h3>
+                        <b class="click"></b>
+                        <div class="module-ct">
+
+                            <div id="k2ModuleBox805" class="k2ItemsBlock tintucmoinhat">
+                                <ul>
+                                    <li class="even">
+                                        <a class="k2Avatar moduleItemAuthorAvatar" rel="author"
+                                           href="tin-bai-2/itemlist/user/42-gomhangvn.html">
+                                            <img src="./assets/media/k2/users/43423.jpg" alt=""
+                                                 style="width:50px;height:auto;"/>
+                                        </a>
+                                        <a class="moduleItemTitle"
+                                           href="tin-gomhang/item/232-gomhangvn-gop-suc-cung-dh-mo-ha-noi-phong-chong-dich-covid-19.html">Gomhang.vn
+                                            góp sức cùng ĐH Mở Hà Nội phòng, chống dịch Covid-19</a>
+                                        <div class="moduleItemIntrotext">
+
+                                            Đại dịch Covid-19 đã ảnh hưởng đến toàn thế giới nói chung và Việt Nam nói
+                                            riêng. Gomhang.vn muốn
+                                            đóng góp một phần nhỏ đối với cộng đồng và cũng coi đây là trách nhiệm đối
+                                            với
+                                            Tổ quốc khi đất
+                                            nước đang gặp khó khăn. Sáng 7/4, đại diện&#8230;
+                                        </div>
+                                        <div class="clr"></div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- SPOTLIGHT -->
+    </section>
+    <!-- //SPOTLIGHT 2 -->
 @endsection

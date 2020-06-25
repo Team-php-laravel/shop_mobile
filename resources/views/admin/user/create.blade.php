@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="title">Tên tài khoản:</label>
                 <input type="text"
-                       class="form-control" name="name" aria-describedby="helpId" required>
+                       class="form-control" name="ten" aria-describedby="helpId" required>
             </div>
             <div class="form-group">
                 <label for="title">Avatar</label>

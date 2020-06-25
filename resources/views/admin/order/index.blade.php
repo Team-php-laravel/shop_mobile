@@ -34,12 +34,11 @@
             <thead>
             <tr class="bg-primary">
                 <th>
-                    <button class="btn btn-sm btn-success" onclick="location.href = 'order/create'">+Thêm</button>
+                    {{--<button class="btn btn-sm btn-success" onclick="location.href = 'order/create'">+Thêm</button>--}}
                 </th>
                 <th>Mã hóa đơn</th>
                 <th>Tên khách hàng</th>
                 <th>Thông tin</th>
-                <th>Đơn hàng</th>
                 <th>Ngày đặt</th>
                 <th>Tổng tiền</th>
             </tr>
@@ -48,9 +47,12 @@
             @foreach($order as $key=>$val)
                 <tr>
                     <td style="min-width: 150px">
-                        <button class="btn btn-sm btn-warning"
-                                onclick="location.href = 'order/{{$val->id}}'">Cập nhật
+                        <button class="btn btn-sm btn-info"
+                                onclick="location.href = 'order/{{$val->id}}'">Xem
                         </button>
+                        {{--<button class="btn btn-sm btn-warning"--}}
+                                {{--onclick="location.href = 'order/{{$val->id}}'">Cập nhật--}}
+                        {{--</button>--}}
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
                             Xóa
@@ -66,19 +68,14 @@
                     </td>
                     <td style="min-width: 300px" class="text-left">
                         <p>Email: {{$val->khach_hang->email}}</p>
-                        <p>SĐT: {{$val->khach_hang->dien_thoai}}</p>
+                        <p>SĐT: {{$val->khach_hang->sdt}}</p>
                         <p>Địa chỉ: {{$val->khach_hang->dia_chi}}</p>
-                    </td>
-                    <td style="min-width: 200px" class="text-left">
-                        <p>Sản phẩm: {{$val->san_pham->ten_sp}}</p>
-                        <p>Số lượng: {{$val->sl_mua}} chiếc</p>
-                        <p>Đơn giá: {{_manny($val->san_pham->gia)}} VNĐ</p>
                     </td>
                     <td style="min-width: 150px">
                         {{date_format(date_create($val['created_at']), "H:i d/m/yy")}}<br>
                         <span style="color: silver">{{$val->user ? $val->user->name: ''}}</span>
                     </td>
-                    <td style="min-width: 100px">{{_manny($val->sl_mua * $val->san_pham->gia)}}đ</td>
+                    <td style="min-width: 100px">{{_manny($val->tong_gia)}} VNĐ</td>
                 </tr>
             @endforeach
             </tbody>

@@ -53,7 +53,7 @@
                         <img class="w-100" src="/uploads/user/{{$val->avatar}}" alt="Ảnh">
                     </td>
                     <td class="text-left">
-                        <p><b>Tài khoản: </b>{{$val->name}}</p>
+                        <p><b>Tài khoản: </b>{{$val->ten}}</p>
                         <p><b>Email: </b>{{$val->email}}</p>
                         <p>
                             <b>Chức

@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="callout-top callout-top-danger col-md-12">
-        <form action="/admin/cat/{{$cat->id}}" method="POST"  enctype="multipart/form-data">
+        <form action="/admin/cat/{{$cat->id}}{{isset($_GET['chil']) ? '?chil='.$_GET['chil']:''}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
@@ -18,10 +18,17 @@
                        class="form-control" name="ten_loai" value="{{$cat->ten_loai}}" aria-describedby="helpId"
                        placeholder="" required>
             </div>
-            <div class="form-group">
-                <label for="">Ảnh đại diện:</label>
-                <input type="file" name="hinh_anh" class="form-control" placeholder="" aria-describedby="helpId">
-            </div>
+            @isset($_GET['chil'])
+                <div class="form-group">
+                    <label for="">Thư mục cha:</label>
+                    <select class="form-control" name="loai_id" required>
+                        @foreach($listcat as $item)
+                            <option @if($cat->loai_id == $item->id) selected
+                                    @endif value="{{$item->id}}">{{$item->ten_loai}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
             <div class="text-center">
                 <button class="btn btn-sm btn-warning" type="submit">Cập nhật</button>
             </div>

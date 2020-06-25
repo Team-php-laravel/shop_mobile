@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Shop Mobile',
+    'title' => 'Gomhang.vn',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Shop Mobile</b>',
+    'logo' => '<b>Gomhang.vn</b>',
     'logo_img' => false,
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -167,7 +167,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'admin/order',
+    'dashboard_url' => 'admin',
 
     'logout_url' => 'logout',
 
@@ -220,7 +220,7 @@ return [
         ],
         [
             'text' => 'Trang chủ',
-            'url' => 'admin/order',
+            'url' => 'admin',
             'icon' => 'fas fa-home',
             'label' => 4,
             'label_color' => 'success',
@@ -254,12 +254,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Danh sách khách hàng',
-                    'url' => 'admin/member/1',
+                    'url' => 'admin/member',
                     'icon_color' => 'red'
                 ],
                 [
                     'text' => 'Danh sách nhà cung cấp',
-                    'url' => 'admin/member/0',
+                    'url' => 'admin/ncc',
                     'icon_color' => 'red'
                 ]
             ],
