@@ -133,7 +133,7 @@
                 <div class="t3-module module" id="Mod680">
                     <div class="custom">
                         <div class="search-box">
-                            <form method="GET" action="">
+                            <form method="GET" action="/">
                                 <input class="tisoSearch" value="{{ isset($_GET['search']) ? $_GET['search']:''}}"
                                        type="text" autocomplete="off" placeholder="Tìm tên sản phẩm" name="search">
                                 <i class="icon-search"></i>
