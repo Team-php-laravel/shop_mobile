@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="">Sale:</label>
-                    <input type="number" name="sale" value="{{$sanpham->giam_gia}}" class="form-control" placeholder=""
+                    <input type="number" name="giam_gia" value="{{$sanpham->giam_gia}}" class="form-control" placeholder=""
                            aria-describedby="helpId" required>
                 </div>
                 <div class="form-group col-md-4">

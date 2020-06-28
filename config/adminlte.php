@@ -275,12 +275,12 @@ return [
                 ],
                 [
                     'text' => 'Quản lý bảo hành',
-//                    'url' => 'admin',
+                    'url' => 'admin/bh',
                     'icon_color' => 'red'
                 ],
                 [
                     'text' => 'Quản lý tin tức',
-//                    'url' => 'admin',
+                    'url' => 'new',
                     'icon_color' => 'red'
                 ]
             ],

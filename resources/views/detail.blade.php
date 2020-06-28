@@ -241,7 +241,7 @@
                                 </a>
                             </div>
                         </div>
-                        @if($sp->mo_ta != 0)
+                        @if($sp->mo_ta != '')
                             <div class="product-description">
                                 <div class="sidebar-box black" style="height: auto">
                                     {!! $sp->mo_ta !!}

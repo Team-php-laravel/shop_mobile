@@ -13,12 +13,12 @@ class cthd extends Model
 
     public function khach_hang()
     {
-        return $this->belongsTo('App\khach_hang', 'khach_hang_id', 'id');
+        return $this->belongsTo('App\khach_hang', 'kh_id', 'id');
     }
 
     public function san_pham()
     {
-        return $this->belongsTo('App\san_pham', 'san_pham_id', 'id');
+        return $this->belongsTo('App\san_pham', 'sp_id', 'id');
     }
 
 
