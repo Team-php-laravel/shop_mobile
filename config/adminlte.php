@@ -280,7 +280,7 @@ return [
                 ],
                 [
                     'text' => 'Quản lý tin tức',
-                    'url' => 'new',
+                    'url' => 'admin/news',
                     'icon_color' => 'red'
                 ]
             ],
@@ -291,7 +291,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Thống kê doanh thu',
-//                    'url' => 'admin',
+                    'url' => 'admin/dt',
                     'icon_color' => 'red'
                 ]
             ],

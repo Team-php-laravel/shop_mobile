@@ -86,7 +86,7 @@
 
                                             <div>
                                                 <div style="text-align: center; border-bottom: 1px solid #CCCCCC">
-                                                    Hóa đơn: {{$sp->ten_sp}}
+                                                    <h5>HÓA ĐƠN: {{$sp->ten_sp}}</h5>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">Họ & tên:</label>

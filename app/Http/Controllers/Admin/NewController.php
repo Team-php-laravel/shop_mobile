@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\bao_hanh;
-use App\san_pham;
+use App\tin_tuc;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
-class BaoHanhController extends Controller
+class NewController extends Controller
 {
     public function __construct()
     {
@@ -22,9 +21,8 @@ class BaoHanhController extends Controller
      */
     public function index()
     {
-
-        $bh = bao_hanh::with('san_pham')->get();
-        return view('admin.bh.index', compact('bh'));
+        $news = tin_tuc::with('user')->get();
+        return view('admin.tin_tuc.index', compact('news'));
     }
 
     /**
@@ -34,8 +32,7 @@ class BaoHanhController extends Controller
      */
     public function create()
     {
-        $sp = san_pham::all();
-        return view('admin.bh.create', compact('sp'));
+        return view('admin.tin_tuc.create');
     }
 
     /**
@@ -46,8 +43,11 @@ class BaoHanhController extends Controller
      */
     public function store(Request $request)
     {
-        bao_hanh::create($request->all());
-        return redirect('admin/bh')->with("message", "Thêm thành công !");
+        $data = collect($request->all())->merge([
+            'user_id' => Auth::user()->id
+        ])->toArray();
+        tin_tuc::create($data);
+        return redirect('admin/news')->with("message", "Thêm thành công !");
     }
 
     /**
@@ -59,9 +59,8 @@ class BaoHanhController extends Controller
     public function show($id)
     {
         //
-        $bh = bao_hanh::findOrFail($id);
-        $sp = san_pham::all();
-        return view('admin.bh.update', compact('bh', 'sp'));
+        $news = tin_tuc::with('user')->find($id);
+        return view('admin.tin_tuc.update', compact('news'));
     }
 
     /**
@@ -72,7 +71,8 @@ class BaoHanhController extends Controller
      */
     public function edit($id)
     {
-        //
+        $news = tin_tuc::find($id);
+        return view('admin.tin_tuc.update', compact('news'));
     }
 
     /**
@@ -84,9 +84,9 @@ class BaoHanhController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $bh = bao_hanh::find($id);
-        $bh->update($request->all());
-        return redirect('admin/bh')->with("message", "Cập nhật thành công !");
+        //
+        tin_tuc::find($id)->update($request->all());
+        return redirect('admin/news' . $request->loai_kh)->with("message", "Cập nhật thành công !");
     }
 
     /**
@@ -95,10 +95,10 @@ class BaoHanhController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
-        bao_hanh::find($id)->delete();
-        return redirect('admin/bh')->with("message", "Xóa thành công!");
+        //
+        tin_tuc::find($id)->delete();
+        return redirect('admin/news')->with("message", "Xóa thành công!");
     }
 }

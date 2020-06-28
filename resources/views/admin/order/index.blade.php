@@ -48,8 +48,10 @@
             @foreach($order as $key=>$val)
                 <tr>
                     <td style="min-width: 150px">
+                        {{--<button class="btn btn-sm btn-outline-danger" onclick="location.href = '/admin/order?s=2'">Xuất hàng</button>--}}
+                        {{--<button class="btn btn-sm btn-outline-danger" onclick="location.href = '/admin/order?s=0'">Hủy hàng</button>--}}
                         {{--<button class="btn btn-sm btn-info"--}}
-                                {{--onclick="location.href = 'order/{{$val->id}}'">Xem--}}
+                        {{--onclick="location.href = 'order/{{$val->id}}'">Xem--}}
                         {{--</button>--}}
                         {{--<button class="btn btn-sm btn-warning"--}}
                         {{--onclick="location.href = 'order/{{$val->id}}'">Cập nhật--}}

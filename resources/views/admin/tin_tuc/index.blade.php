@@ -4,7 +4,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h5>Quản lý bảo hành</h5>
+    <h5>Quản lý tin tức</h5>
 @stop
 
 @section('content')
@@ -34,39 +34,43 @@
             <thead>
             <tr class="bg-primary">
                 <th>STT</th>
-                <th>Tên sản phẩm</th>
-                <th>Thời gian bảo hành</th>
-                <th>Lý do bảo hành</th>
+                <th>Tiêu đề</th>
+                <th>Người Đăng</th>
+                <th>Mô tả</th>
+                <th>Ngày đăng</th>
                 <th style="width: 150px">
-                    <button class="btn btn-sm btn-success" onclick="location.href = '/admin/bh/create'">
+                    <button class="btn btn-sm btn-success" onclick="location.href = '/admin/news/create'">
                         +Thêm
                     </button>
                 </th>
             </tr>
             </thead>
             <tbody>
-            @foreach($bh as $key=>$val)
+            @foreach($news as $key=>$val)
                 <tr>
                     <td>{{$key+1}}</td>
                     <td>
-                        {{$val->san_pham->ten_sp}}
+                        {{$val->tieu_de}}
                     </td>
                     <td>
-                        {{$val->thoi_gian_bao_hanh}}
+                        {{$val['user']['name']}}
                     </td>
                     <td>
-                        {{$val->ly_do_bao_hanh}}
+                        {{$val->mo_ta}}
+                    </td>
+                    <td>
+                        {{$val->Ngay_dang}}
                     </td>
                     <td>
                         <button class="btn btn-sm btn-warning"
-                                onclick="location.href = '/admin/bh/{{$val->id}}'">Cập nhật
+                                onclick="location.href = '/admin/news/{{$val->id}}'">Cập nhật
                         </button>
 
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
                             Xóa
                         </button>
-                        <form id="delete{{$val->id}}" action="/admin/bh/{{$val->id}}" method="POST">
+                        <form id="delete{{$val->id}}" action="/admin/news/{{$val->id}}" method="POST">
                             @method('DELETE')
                             @csrf
                         </form>
