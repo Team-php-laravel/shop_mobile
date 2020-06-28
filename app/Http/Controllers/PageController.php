@@ -65,7 +65,6 @@ class PageController extends Controller
 
     public function order(Request $request)
     {
-//        return $request->so_luong * san_pham::find($request->id_sp)->gia;
         $kh = khach_hang::updateOrCreate(['ten_kh' => $request->ten_kh, 'email' => $request->email, 'sdt' => $request->sdt], ['dia_chi' => $request->dia_chi]);
         $hd = hoa_don::create([
             'kh_id' => $kh->id,
@@ -79,6 +78,7 @@ class PageController extends Controller
             'so_luong' => $request->so_luong,
             'don_gia' => $request->so_luong * san_pham::find($request->id_sp)->gia
         ]);
+
         return 1;
     }
 
