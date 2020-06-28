@@ -59,7 +59,7 @@
                         {{$val->mo_ta}}
                     </td>
                     <td>
-                        {{$val->Ngay_dang}}
+                        {{$val->ngay_dang}}
                     </td>
                     <td>
                         <button class="btn btn-sm btn-warning"
