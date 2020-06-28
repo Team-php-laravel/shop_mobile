@@ -275,12 +275,12 @@ return [
                 ],
                 [
                     'text' => 'Quản lý bảo hành',
-                    'url' => 'admin',
+//                    'url' => 'admin',
                     'icon_color' => 'red'
                 ],
                 [
                     'text' => 'Quản lý tin tức',
-                    'url' => 'admin',
+//                    'url' => 'admin',
                     'icon_color' => 'red'
                 ]
             ],
@@ -291,7 +291,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Thống kê doanh thu',
-                    'url' => 'admin',
+//                    'url' => 'admin',
                     'icon_color' => 'red'
                 ]
             ],
