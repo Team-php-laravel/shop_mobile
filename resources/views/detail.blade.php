@@ -242,7 +242,7 @@
                             </div>
                         </div>
                         @if($sp->mo_ta != '')
-                            <div class="product-description">
+                            <div class="product-description d-flex">
                                 <div class="sidebar-box black" style="height: auto">
                                     {!! $sp->mo_ta !!}
                                     <div class="clear"></div>
