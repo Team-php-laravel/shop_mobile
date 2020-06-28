@@ -60,7 +60,7 @@
                                     <div class="custom">
                                         <div class="tisoMuaNgay">
                                             <div class="aloButton">
-                                                <a class="tisoMuaNgay" href="#">
+                                                <a class="tisoMuaNgay" id="myBtn">
                                                     <span>
                                                         <span>
                                                             <strong>MUA NGAY</strong>
@@ -75,6 +75,60 @@
                                             <br/>
                                             <div class="goidien">Bảo hành, hỗ trợ: <a href="tel:19006028">1900.6028</a>
                                                 (8h-22h)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- The Modal -->
+                                    <div id="myModal" class="modall">
+                                        <!-- Modal content -->
+                                        <div class="modal-contentt">
+                                            <span class="close">&times;</span>
+
+                                            <div>
+                                                <div style="text-align: center; border-bottom: 1px solid #CCCCCC">
+                                                    Hóa đơn: {{$sp->ten_sp}}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Họ & tên:</label>
+                                                    <input type="text" name="ten_kh" class="form-control w-100"
+                                                           placeholder="" aria-describedby="helpId" required>
+                                                </div>
+                                                <div style="display: flex">
+                                                    <div class="form-group" style="padding-right: 10px">
+                                                        <label for="">Điện thoại:</label>
+                                                        <input type="text" name="sdt" class="form-control"
+                                                               placeholder="" aria-describedby="helpId" required>
+                                                    </div>
+                                                    <div class="form-group" style="padding-left: 10px">
+                                                        <label for="">Email:</label>
+                                                        <input type="text" name="email" class="form-control"
+                                                               placeholder="" aria-describedby="helpId" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="">Địa chỉ:</label>
+                                                    <input type="text" name="dia_chi" class="form-control w-100"
+                                                           placeholder="" aria-describedby="helpId" required>
+                                                </div>
+                                                <div style="display: flex">
+                                                    <div class="form-group" style="padding-right: 10px">
+                                                        <label for="">Đơn giá:</label>
+                                                        <input type="text" disabled value="{{_manny($sp->gia)}}đ"
+                                                               name="gia"
+                                                               class="form-control"
+                                                               placeholder="" aria-describedby="helpId" required>
+                                                    </div>
+                                                    <div class="form-group" style="padding-left: 10px">
+                                                        <label for="">Số lượng:</label>
+                                                        <input type="number" name="so_luong" class="form-control"
+                                                               placeholder="" aria-describedby="helpId" required>
+                                                    </div>
+                                                </div>
+                                                <div style="text-align: center">
+                                                    <bttton onclick="order({{$sp->id}})" class="btn btn-primary">Mua
+                                                        ngay
+                                                    </bttton>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -200,4 +254,90 @@
             </div>
         </section>
     </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function inputNull(name, text) {
+            if (name.trim() == '') {
+                alert(text + ' không được để trông!');
+                return true;
+            }
+            return false
+        }
+
+        function order(id) {
+            const ten_kh = $('input[name="ten_kh"]').val();
+            if (inputNull(ten_kh, 'Họ & tên')) {
+                return;
+            }
+            const email = $('input[name="email"]').val();
+            if (inputNull(email, 'Email')) {
+                return;
+            }
+            const sdt = $('input[name="sdt"]').val();
+            if (inputNull(sdt, 'Điện thoại')) {
+                return;
+            }
+            const dia_chi = $('input[name="dia_chi"]').val();
+            if (inputNull(dia_chi, 'Địa chỉ')) {
+                return;
+            }
+            const so_luong = $('input[name="so_luong"]').val();
+            if (inputNull(so_luong, 'Số lượng mua')) {
+                return;
+            }
+
+            const gia = $('input[name="gia"]').val();
+
+            if (so_luong < 1) {
+                alert('Số lượng không hợp lệ');
+                return;
+            }
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.post('/order', {
+                id_sp: id,
+                ten_kh: ten_kh,
+                email: email,
+                sdt: sdt,
+                dia_chi: dia_chi,
+                so_luong: so_luong
+            }, function (data) {
+                console.log(data);
+                if (data == 1) {
+                    alert("Đặt hàng thành công!");
+                    $('#myModal').hide();
+                } else {
+                    alert("Đặt hàng thất bại, vui lòng thử lại!");
+                }
+            });
+        }
+    </script>
 @endsection

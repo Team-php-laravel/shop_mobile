@@ -21,4 +21,9 @@ class hoa_don extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
+    public function cthd()
+    {
+        return $this->belongsTo(cthd::class, 'id', 'hd_id');
+    }
+
 }

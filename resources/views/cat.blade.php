@@ -32,7 +32,7 @@
                                             <div class="prod-row">
                                                 <div class="product-box spacer disc ">
                                                     <div class="browseImage ">
-                                                        <a href="">
+                                                        <a href="/detail/{{$item->id}}">
                                                             <img src="./uploads/product/{{$item->hinh_anh}}"
                                                                  alt="op-lung-ho-co-sieu-trong-iphone"
                                                                  class="browseProductImage featuredProductImage"

@@ -112,12 +112,11 @@
             </div>
             <!-- END OF OGO -->
             <!-- PHONE -->
+            <div class="span2"></div>
             <div class="span3 tisophoneheader">
                 <div class="t3-module module_phone" id="Mod101">
                     <div class="module-inner">
                         <div class="module-ct">
-
-
                             <div class="custom_phone">
                                 <p>
                                 <div class="tiso1">Gọi ngay hotline</div>
@@ -134,26 +133,12 @@
                 <div class="t3-module module" id="Mod680">
                     <div class="custom">
                         <div class="search-box">
-                            <form method="post" action="https://gomhang.vn/ajaxsearch/timkiem.php"><input
-                                        class="tisoSearch"
-                                        type="text" autocomplete="off" placeholder="Tìm tên sản phẩm" name="key">
+                            <form method="GET" action="">
+                                <input class="tisoSearch" value="{{ isset($_GET['search']) ? $_GET['search']:''}}"
+                                       type="text" autocomplete="off" placeholder="Tìm tên sản phẩm" name="search">
                                 <i class="icon-search"></i>
                                 <div class="result">&nbsp;</div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="span2 item-last">
-                <div class="t3-module module_cart" id="Mod152">
-                    <div class="module-inner">
-                        <div class="module-ct">
-                            <!-- Virtuemart 2 Ajax Card -->
-                            <a href="dat-hang-new.html" class="vmCartModule_ajax vmCartModule btn btn-danger">
-                                <div class="miniart" style="color: white;padding-bottom: 10px;">
-                                    Giỏ hàng
-                                </div>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -171,7 +156,7 @@
                 <div class="nav-collapse collapse">
                     <div class="t3-megamenu" data-responsive="true">
                         <ul class="nav navbar-nav level0">
-                            <li class="active" data-id="435" data-level="1">
+                            <li class="{{ (request()->is('/')) ? 'active' : '' }}" data-id="435" data-level="1">
                                 <a class="mnu-img" href="/">
                                     <img src="./assets/images/menu-icon/Gomhng.png" alt="Home"/>
                                     <span class="image-title">Home
@@ -199,26 +184,26 @@
                                                                 <a href="/cat/{{$item->id}}"
                                                                    data-target="#">{{$item->ten_loai}}
                                                                 </a>
-                                                                @isset($item->children)
-                                                                    @foreach($item->children as $chil)
-                                                                        <div class="nav-child dropdown-menu mega-dropdown-menu">
-                                                                            <div class="mega-dropdown-inner">
-                                                                                <div class="row-fluid">
-                                                                                    <div class="span12 mega-col-nav">
-                                                                                        <div class="mega-inner">
-                                                                                            <ul class="mega-nav level2">
+                                                                @if(sizeof($item->children) > 0)
+                                                                    <div class="nav-child dropdown-menu mega-dropdown-menu">
+                                                                        <div class="mega-dropdown-inner">
+                                                                            <div class="row-fluid">
+                                                                                <div class="span12 mega-col-nav">
+                                                                                    <div class="mega-inner">
+                                                                                        <ul class="mega-nav level2">
+                                                                                            @foreach($item->children as $chil)
                                                                                                 <li>
                                                                                                     <a href="/cat/{{$chil->id}}"
                                                                                                        data-target="#">{{$chil->ten_loai}}</a>
                                                                                                 </li>
-                                                                                            </ul>
-                                                                                        </div>
+                                                                                            @endforeach
+                                                                                        </ul>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    @endforeach
-                                                                @endisset
+                                                                    </div>
+                                                                @endif
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -229,23 +214,25 @@
                                 </div>
                             </li>
                             <li>
-                                <a class="mnu-img" href="/sale" data-target="#">
+                                <a class="mnu-img {{ (request()->is('sale')) ? 'active' : '' }}" href="/sale"
+                                   data-target="#">
                                     <img src="./assets/images/menu-icon/Khuyen-mai-combo.png" alt="SALE"/>
                                     <span class="image-title">SALE</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="mnu-img" href="/news" data-target="#">
+                                <a class="mnu-img {{ (request()->is('news')) ? 'active' : '' }}" href="/news"
+                                   data-target="#">
                                     <img src="./assets/images/newsok.png" alt="Tin tức"/>
                                     <span class="image-title">Tin tức</span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="mnu-img" href="/contact" data-target="#">
-                                    <img src="./assets/images/menu-icon/Alo.png" alt="Liên hệ"/>
-                                    <span class="image-title">Liên hệ</span>
-                                </a>
-                            </li>
+                            {{--<li>--}}
+                            {{--<a class="mnu-img" href="/contact" data-target="#">--}}
+                            {{--<img src="./assets/images/menu-icon/Alo.png" alt="Liên hệ"/>--}}
+                            {{--<span class="image-title">Liên hệ</span>--}}
+                            {{--</a>--}}
+                            {{--</li>--}}
                         </ul>
                     </div>
                 </div>
@@ -535,7 +522,6 @@
 
 <script type="text/javascript" src="./assets/templates/t3_blank/js/jquery.mCustomScrollbar.js"></script>
 <script type="text/javascript" src="./assets/templates/t3_blank/js/linescript.js"></script>
-<script type="text/javascript" src="./assets/templates/t3_blank/html/com_virtuemart/virtuemart/Cookie.js">
-</script>
+<script type="text/javascript" src="./assets/templates/t3_blank/html/com_virtuemart/virtuemart/Cookie.js"></script>
 </body>
 </html>

@@ -39,6 +39,7 @@
                 <th>Mã hóa đơn</th>
                 <th>Tên khách hàng</th>
                 <th>Thông tin</th>
+                <th>Sản phẩm</th>
                 <th>Ngày đặt</th>
                 <th>Tổng tiền</th>
             </tr>
@@ -47,11 +48,11 @@
             @foreach($order as $key=>$val)
                 <tr>
                     <td style="min-width: 150px">
-                        <button class="btn btn-sm btn-info"
-                                onclick="location.href = 'order/{{$val->id}}'">Xem
-                        </button>
+                        {{--<button class="btn btn-sm btn-info"--}}
+                                {{--onclick="location.href = 'order/{{$val->id}}'">Xem--}}
+                        {{--</button>--}}
                         {{--<button class="btn btn-sm btn-warning"--}}
-                                {{--onclick="location.href = 'order/{{$val->id}}'">Cập nhật--}}
+                        {{--onclick="location.href = 'order/{{$val->id}}'">Cập nhật--}}
                         {{--</button>--}}
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
@@ -70,6 +71,11 @@
                         <p>Email: {{$val->khach_hang->email}}</p>
                         <p>SĐT: {{$val->khach_hang->sdt}}</p>
                         <p>Địa chỉ: {{$val->khach_hang->dia_chi}}</p>
+                    </td>
+                    <td style="min-width: 300px" class="text-left">
+                        <p>Sản phẩm: {{\App\san_pham::find($val->cthd->sp_id)->ten_sp}}</p>
+                        <p>Số lượng: {{$val->cthd->so_luong}}</p>
+                        <p>Đơn giá: {{_manny($val->cthd->don_gia)}} VNĐ</p>
                     </td>
                     <td style="min-width: 150px">
                         {{date_format(date_create($val['created_at']), "H:i d/m/yy")}}<br>

@@ -8,7 +8,7 @@ class cthd extends Model
 {
     //
     protected $table = "chi_tiet_hoa_don";
-    protected $fillable = ['hd_id', 'sp_id', 'so_luong', 'don_ga'];
+    protected $fillable = ['hd_id', 'sp_id', 'so_luong', 'don_gia'];
     public $timestamps = false;
 
     public function khach_hang()

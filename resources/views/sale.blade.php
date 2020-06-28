@@ -77,26 +77,22 @@
 
                             <div id="k2ModuleBox805" class="k2ItemsBlock tintucmoinhat">
                                 <ul>
-                                    <li class="even">
-                                        <a class="k2Avatar moduleItemAuthorAvatar" rel="author"
-                                           href="tin-bai-2/itemlist/user/42-gomhangvn.html">
-                                            <img src="./assets/media/k2/users/43423.jpg" alt=""
-                                                 style="width:50px;height:auto;"/>
-                                        </a>
-                                        <a class="moduleItemTitle"
-                                           href="tin-gomhang/item/232-gomhangvn-gop-suc-cung-dh-mo-ha-noi-phong-chong-dich-covid-19.html">Gomhang.vn
-                                            góp sức cùng ĐH Mở Hà Nội phòng, chống dịch Covid-19</a>
-                                        <div class="moduleItemIntrotext">
-
-                                            Đại dịch Covid-19 đã ảnh hưởng đến toàn thế giới nói chung và Việt Nam nói
-                                            riêng. Gomhang.vn muốn
-                                            đóng góp một phần nhỏ đối với cộng đồng và cũng coi đây là trách nhiệm đối
-                                            với
-                                            Tổ quốc khi đất
-                                            nước đang gặp khó khăn. Sáng 7/4, đại diện&#8230;
-                                        </div>
-                                        <div class="clr"></div>
-                                    </li>
+                                    @foreach($news as $item)
+                                        <li class="even">
+                                            <a class="k2Avatar moduleItemAuthorAvatar" rel="author"
+                                               href="tin-bai-2/itemlist/user/42-gomhangvn.html">
+                                                <img src="./assets/media/k2/users/43423.jpg" alt=""
+                                                     style="width:50px;height:auto;"/>
+                                            </a>
+                                            <a class="moduleItemTitle"
+                                               href="/new-detail/{{$item->id}}">
+                                                {{$item->tieu_de}}</a>
+                                            <div class="moduleItemIntrotext">
+                                                {{$item->mo_ta}}
+                                            </div>
+                                            <div class="clr"></div>
+                                        </li>
+                                    @endforeach
                                 </ul>
 
                             </div>

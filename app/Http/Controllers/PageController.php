@@ -2,36 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\cthd;
 use App\hoa_don;
 use App\khach_hang;
 use App\loai_sp;
 use App\san_pham;
 use App\tin_tuc;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class PageController extends Controller
 {
     public function home()
     {
-        $sp_new = san_pham::orderBy('created_at', 'desc')->get();
-        return view('home', compact('sp_new'));
-//        if (isset(\request()->search) || isset(\request()->cat)) {
-//            $san_pham = san_pham::where('ten_sp', 'like', '%' . \request()->search . '%')->paginate(12);
-//            if (isset(\request()->cat)) {
-//                $san_pham = san_pham::where('ten_sp', 'like', '%' . \request()->search . '%')->where('loai_id', \request()->cat)->paginate(12);
-//            }
-//        } else {
-//            $san_pham = san_pham::paginate(12);
-//        }
-//        $cat = loai_sp::all();
-//        return view('home', compact('san_pham', 'cat'));
+        if (isset(\request()->search)) {
+            $sp_new = san_pham::where('ten_sp', 'like', '%' . \request()->search . '%')->orderBy('created_at', 'desc')->get();
+        } else {
+            $sp_new = san_pham::orderBy('created_at', 'desc')->get();
+        }
+        $news = tin_tuc::limit(5)->get();
+        return view('home', compact('sp_new', 'news'));
     }
 
     public function sale()
     {
-        $sp_new = san_pham::orderBy('created_at', 'desc')->get();
-        return view('sale', compact('sp_new'));
+        $news = tin_tuc::limit(5)->get();
+        $sp_new = san_pham::where('giam_gia', '>', '0')->orderBy('created_at', 'desc')->get();
+        return view('sale', compact('sp_new', 'news'));
     }
 
     public function detail($id)
@@ -67,12 +65,19 @@ class PageController extends Controller
 
     public function order(Request $request)
     {
-        $kh = khach_hang::updateOrCreate(['ten_kh' => $request->ten_kh, 'email' => $request->email, 'dien_thoai' => $request->dien_thoai], ['dia_chi' => $request->dia_chi]);
-        hoa_don::create([
-            'khach_hang_id' => $kh->id,
-            'san_pham_id' => $request->san_pham_id,
-            'sl_mua' => $request->sl_mua,
-            'tong_tien' => $request->sl_mua * san_pham::find($request->san_pham_id)->gia
+//        return $request->so_luong * san_pham::find($request->id_sp)->gia;
+        $kh = khach_hang::updateOrCreate(['ten_kh' => $request->ten_kh, 'email' => $request->email, 'sdt' => $request->sdt], ['dia_chi' => $request->dia_chi]);
+        $hd = hoa_don::create([
+            'kh_id' => $kh->id,
+            'user_id' => Auth::user()->id,
+            'tong_gia' => $request->so_luong * san_pham::find($request->id_sp)->gia
+        ]);
+
+        cthd::create([
+            'hd_id' => $hd->id,
+            'sp_id' => $request->id_sp,
+            'so_luong' => $request->so_luong,
+            'don_gia' => $request->so_luong * san_pham::find($request->id_sp)->gia
         ]);
         return 1;
     }
