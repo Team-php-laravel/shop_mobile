@@ -34,6 +34,7 @@
             <thead>
             <tr class="bg-primary">
                 <th>STT</th>
+                <th>Mã khách hàng</th>
                 <th>Tên sản phẩm</th>
                 <th>Thời gian bảo hành</th>
                 <th>Lý do bảo hành</th>
@@ -48,6 +49,7 @@
             @foreach($bh as $key=>$val)
                 <tr>
                     <td>{{$key+1}}</td>
+                    <td>{{$val->ma_kh}}</td>
                     <td>
                         {{$val->san_pham->ten_sp}}
                     </td>

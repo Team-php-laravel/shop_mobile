@@ -5,26 +5,45 @@
 @section('app')
 @section('title', 'Dashboard')
 
-@section('content_header')
-    <h1>Thống kê doanh thu</h1>
-@stop
-
 @section('content')
     <div class="">
         <!-- Main content -->
         <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="callout-top callout-top-danger col-md-12">
-                        <div class="card-body">
-                            <div class="chart">
-                                <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
-                            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="callout-top callout-top-danger">
+                        <div class="card-header pt-0">
+                            <h4 class="m-0">Doanh thu sản phẩm bán chạy trong ngày</h4>
+                        </div>
+                        <div class="chart">
+                            <canvas id="day" style="height:230px; min-height:230px"></canvas>
                         </div>
                     </div>
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+                <div class="col-md-6">
+                    <div class="callout-top callout-top-danger">
+                        <div class="card-header pt-0">
+                            <h4 class="m-0">Doanh thu sản phẩm bán chạy trong tháng</h4>
+                        </div>
+                        <div class="chart">
+                            <canvas id="mon" style="height:230px; min-height:230px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="callout-top callout-top-danger">
+                        <div class="card-header pt-0">
+                            <h4 class="m-0">Thống kê doanh thu theo tháng của năm hiện tại</h4>
+                        </div>
+                        <div class="chart">
+                            <canvas id="year" style="height:230px; min-height:230px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>

@@ -8,7 +8,7 @@ class tin_tuc extends Model
 {
     //
     protected $table = "tin_tuc";
-    protected $fillable = ['user_id', 'tieu_de', 'mota', 'noi_dung','ngay_dang'];
+    protected $fillable = ['user_id', 'tieu_de', 'mo_ta', 'noi_dung','ngay_dang'];
     public $timestamps = false;
 
 

@@ -4,7 +4,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h5>Danh sách hóa đơn</h5>
+    <h5>Lịch sử mua hàng:</h5>
 @stop
 
 @section('content')
@@ -33,9 +33,6 @@
                class="table table-hover table-striped table-bordered border text-center">
             <thead>
             <tr class="bg-primary">
-                <th>
-                    {{--<button class="btn btn-sm btn-success" onclick="location.href = 'order/create'">+Thêm</button>--}}
-                </th>
                 <th>Mã hóa đơn</th>
                 <th>Tên khách hàng</th>
                 <th>Thông tin</th>
@@ -47,16 +44,6 @@
             <tbody>
             @foreach($order as $key=>$val)
                 <tr>
-                    <td style="min-width: 150px">
-                        <button class="btn btn-sm btn-outline-danger"
-                                onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
-                            Xóa
-                        </button>
-                        <form id="delete{{$val->id}}" action="order/{{$val->id}}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                        </form>
-                    </td>
                     <td style="min-width: 100px">HĐ00{{$val->id}}</td>
                     <td style="min-width: 150px">
                         {{$val->khach_hang->ten_kh}}

@@ -13,6 +13,10 @@
               enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="">Mã khách hàng:</label>
+                <input type="number" name="ma_kh" class="form-control" placeholder="0327 932 ..." required>
+            </div>
+            <div class="form-group">
                 <label for="title">Chọn sản phẩm:</label>
                 <select class="form-control" name="sp_id" required>
                     @foreach($sp as $item)

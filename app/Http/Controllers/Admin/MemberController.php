@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\hoa_don;
 use App\khach_hang;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -67,8 +68,8 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $member = khach_hang::find($id);
-        return view('admin.member.update', compact('member'));
+        $order = hoa_don::with('cthd', 'khach_hang')->where('kh_id', $id)->get();
+        return view('admin.member.detail', compact('order'));
     }
 
     /**

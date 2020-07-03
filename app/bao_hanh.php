@@ -8,7 +8,7 @@ class bao_hanh extends Model
 {
     //
     protected $table = "bao_hanh";
-    protected $fillable = ['sp_id','thoi_gian_bao_hanh', 'ly_do_bao_hanh'];
+    protected $fillable = ['sp_id','thoi_gian_bao_hanh', 'ly_do_bao_hanh', 'ma_kh'];
     public $timestamps = false;
 
     public function san_pham()

@@ -40,6 +40,21 @@ class DashboardController extends Controller
                 }
             }
         }
-        return $value;
+
+        $date = getdate();
+
+        $day = DB::select("SELECT ten_sp, sum(don_gia) as \"ttien\"
+            FROM chi_tiet_hoa_don ct JOIN san_pham sp on  sp.id=ct.sp_id
+            WHERE ct.hd_id IN (SELECT id
+            FROM hoa_don WHERE DAY(ngay_tao) = ? and MONTH(ngay_tao) = ? and YEAR(ngay_tao) = ?)
+            GROUP BY ten_sp ORDER BY ttien ASC limit 3", [$date['mday'], $date['mon'], $date['year']]);
+
+        $mon = DB::select("SELECT ten_sp, sum(don_gia) as \"ttien\"
+            FROM chi_tiet_hoa_don ct JOIN san_pham sp on  sp.id=ct.sp_id
+            WHERE ct.hd_id IN (SELECT id
+            FROM hoa_don WHERE MONTH(ngay_tao) = ? and YEAR(ngay_tao) = ?)
+            GROUP BY ten_sp ORDER BY ttien ASC limit 3", [$date['mon'], $date['year']]);
+
+        return response()->json(compact('value', 'day', 'mon'));
     }
 }

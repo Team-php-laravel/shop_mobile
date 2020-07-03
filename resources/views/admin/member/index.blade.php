@@ -57,7 +57,10 @@
                     <td>{{$val->sdt}}</td>
                     <td>{{$val->dia_chi}}</td>
 
-                    <td>
+                    <td style="width: 150px">
+                        <button class="btn btn-sm btn-info"
+                                onclick="location.href = 'member/{{$val->id}}/edit'">Xem
+                        </button>
                         <button class="btn btn-sm btn-warning"
                                 onclick="location.href = 'member/{{$val->id}}'">Cập nhật
                         </button>
