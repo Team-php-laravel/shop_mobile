@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Admin
       ========================================================
     */
     Route::get('/dt', 'DashboardController@index');
+    Route::resource('/export', 'ExportController');
     Route::resource('bh', 'BaoHanhController');
     Route::resource('news', 'NewController');
     Route::resource('cat', 'CatController');

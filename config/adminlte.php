@@ -274,6 +274,11 @@ return [
                     'icon_color' => 'red'
                 ],
                 [
+                    'text' => 'Xuất sản phẩm',
+                    'icon_color' => 'red',
+                    'url' => '/admin/export',
+                ],
+                [
                     'text' => 'Quản lý bảo hành',
                     'url' => 'admin/bh',
                     'icon_color' => 'red'
