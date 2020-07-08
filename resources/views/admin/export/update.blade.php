@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('admin.layout.admin')
 
-@section('main')
-@section('title', 'Quản lý giao dịch')
+@section('app')
+@section('title', 'Dashboard')
+
 @section('content_header')
-    <h5 class="m-0">Cập nhật hóa đơn:</h5>
+    <h5>Cập nhật đơn hàng xuất</h5>
 @stop
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}"/>

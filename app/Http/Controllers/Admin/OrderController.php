@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\cthd;
 use App\hoa_don;
 use App\khach_hang;
 use App\san_pham;
@@ -96,10 +97,10 @@ class orderController extends Controller
         //
         $hd = hoa_don::find($id);
         $sp = san_pham::find($request->san_pham_id);
-        if ($sp->so_luong + $hd->sl_mua - $request->sl_mua < 0) {
+        if ($sp->so_luong + $hd->so_luong - $request->so_luong < 0) {
             return redirect('admin/order')->with("error", "Thất bại, số lượng trong kho không đủ!");
         }
-        $sp->update(['so_luong' => $sp->so_luong + $hd->sl_mua - $request->sl_mua]);
+        $sp->update(['so_luong' => $sp->so_luong + $hd->so_luong - $request->so_luong]);
         $hd->update($request->all());
         return redirect('admin/order')->with("message", "Cập nhật thành công !");
     }
@@ -113,13 +114,15 @@ class orderController extends Controller
     public function destroy($id)
     {
         $hd = hoa_don::find($id);
-        try {
-            $sp = san_pham::find($hd->san_pham_id);
-            $sp->update(['so_luong' => $sp->so_luong + $hd->sl_mua]);
+//        try {
+            $cthd = cthd::where('hd_id', $hd->id);
+            $sp = san_pham::find($cthd->first()->sp_id);
+            $sp->update(['so_luong' => $sp->so_luong + $cthd->first()->so_luong]);
+            $cthd->delete();
             $hd->delete();
             return redirect('admin/order')->with("message", "Xóa thành công!");
-        } catch (\Exception $e) {
-            return redirect('admin/order')->with("error", "Thất bại!");
-        }
+//        } catch (\Exception $e) {
+//            return redirect('admin/order')->with("error", "Thất bại!");
+//        }
     }
 }
