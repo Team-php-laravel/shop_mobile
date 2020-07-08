@@ -32,7 +32,7 @@ class ExportController extends Controller
      */
     public function create()
     {
-        $san_pham = san_pham::all();
+        $san_pham = san_pham::where('so_luong', '>', 0)->get();
         $khach_hang = khach_hang::all();
         $ncc = ncc::all();
         return view('admin.export.create', compact('san_pham', 'khach_hang', 'ncc'));
