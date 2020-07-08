@@ -32,7 +32,7 @@
         <table id="data-table" align="center" width="100%"
                class="table table-hover table-striped table-bordered border text-center display">
             <thead>
-            <tr class="bg-danger">
+            <tr class="bg-primary">
                 <th>Mã hóa đơn</th>
                 <th>Người tạo</th>
                 <th>Thời gian</th>
@@ -54,7 +54,7 @@
                     <td onclick="detailt({{$val->id}})">{{_manny($val->tong_gia)}} vnđ</td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary"
-                                onclick="location.href = 'giao_dich/{{$val->id}}/edit'">Cập nhật
+                                onclick="location.href = '/admin/export/{{$val->id}}/edit'">Cập nhật
                         </button>
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
@@ -164,7 +164,7 @@
                 <div class="modal-body table-responsive">
                     <table class="table table-hover table-striped table-bordered text-center">
                         <thead>
-                        <tr class="bg-danger">
+                        <tr class="bg-primary">
                             <th>STT</th>
                             <th>Tên sản phẩm</th>
                             <th>Số lượng mua</th>

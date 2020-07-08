@@ -24,7 +24,7 @@ class orderController extends Controller
      */
     public function index()
     {
-        $order = hoa_don::with('khach_hang', 'user', 'cthd')->get();
+        $order = hoa_don::with('khach_hang', 'user', 'cthd')->where('type_id', 0)->get();
 
         return view('admin.order.index', compact('order'));
     }
@@ -114,15 +114,15 @@ class orderController extends Controller
     public function destroy($id)
     {
         $hd = hoa_don::find($id);
-//        try {
+        try {
             $cthd = cthd::where('hd_id', $hd->id);
             $sp = san_pham::find($cthd->first()->sp_id);
             $sp->update(['so_luong' => $sp->so_luong + $cthd->first()->so_luong]);
             $cthd->delete();
             $hd->delete();
             return redirect('admin/order')->with("message", "Xóa thành công!");
-//        } catch (\Exception $e) {
-//            return redirect('admin/order')->with("error", "Thất bại!");
-//        }
+        } catch (\Exception $e) {
+            return redirect('admin/order')->with("error", "Thất bại!");
+        }
     }
 }

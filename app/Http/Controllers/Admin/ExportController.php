@@ -21,7 +21,7 @@ class ExportController extends Controller
     public function index()
     {
         //
-        $hoa_don = hoa_don::with('khach_hang', 'user')->get();
+        $hoa_don = hoa_don::with('khach_hang', 'user')->where('type_id', 1)->get();
         return view('admin.export.index', compact('hoa_don'));
     }
 
@@ -92,7 +92,11 @@ class ExportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $san_pham = san_pham::where('so_luong', '>', 0)->get();
+        $khach_hang = khach_hang::all();
+        $ncc = ncc::all();
+        $hoa_don = hoa_don::findOrFail($id);
+        return view('admin.export.update', compact('hoa_don', 'khach_hang', 'san_pham', 'ncc'));
     }
 
     /**
@@ -104,7 +108,37 @@ class ExportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $cthd = cthd::where('hd_id', $id);
+            foreach ($cthd->get() as $val) {
+                $san_pham = san_pham::findOrFail($val->sp_id);
+                $san_pham->update(['so_luong' => ($san_pham->so_luong + $val->so_luong)]);
+            }
+            $cthd->delete();
+
+            $temp = substr($request->id_kh, 0, 2);
+            $tg = 0;
+            if ($temp == 'kh') {
+                $tg = 1;
+                $kh_id = substr($request->id_kh, 2);
+            } else
+                $ncc_id = substr($request->id_kh, 2);
+
+            if ($tg == 1)
+                hoa_don::findOrFail($id)->update(['kh_id' => $kh_id, 'tong_gia' => $request->manny]);
+            else
+                hoa_don::findOrFail($id)->update(['kh_id' => $ncc_id, 'tong_gia' => $request->manny]);
+
+
+            foreach ($request->san_pham as $val) {
+                cthd::create(['hd_id' => $id, 'sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'don_gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100)]);
+                $sp = san_pham::find($val['id']);
+                $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+            }
+            return 1;
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
     /**

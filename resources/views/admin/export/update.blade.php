@@ -4,7 +4,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h5>Cập nhật đơn hàng xuất</h5>
+    <h5>Cập nhật hóa đơn xuất</h5>
 @stop
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
@@ -19,26 +19,34 @@
                 <td>Khách hàng:</td>
                 <td style="width: 240px;text-align: left">
                     <div class="form-group m-0 khach_hang">
-                        <select value="{{$hoa_don->khach_hang_id}}" class="form-control select2" name="id_kh"
+                        <select value="{{is_null($hoa_don->kh_id) ? 'nc'.$hoa_don->ncc_id: 'kh'.$hoa_don->kh_id }}"
+                                class="form-control select2" name="id_kh"
                                 style="width: 100%;">
                             @foreach($khach_hang as $val)
-                                @if($val->id === $hoa_don->khach_hang_id)
-                                    <option selected value="{{$val->id}}">{{$val->ten_kh}}</option>
+                                @if($val->id === $hoa_don->kh_id)
+                                    <option value="kh{{$val->id}}" selected
+                                            title="{{"KH - ".$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->sdt}}">
+                                        {{$val->ten_kh}}</option>
                                 @else
-                                    <option value="{{$val->id}}"
-                                            title="{{$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->dien_thoai}}">
+                                    <option value="kh{{$val->id}}"
+                                            title="{{"KH - ".$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->sdt}}">
                                         {{$val->ten_kh}}</option>
                                 @endif
                             @endforeach
+                            @foreach($ncc as $val)
+                                <option value="nc{{$val->id}}" @if($hoa_don->ncc_id == $val->id) selected @endif
+                                title="{{"NCC - ".$val->ten_ncc.",".$val->dia_chi.",".$val->sdt.",".$val->ms_thue}}">
+                                    {{$val->ten_ncc}}</option>
+                            @endforeach
                         </select>
                     </div>
-                    <input class="form-control khach_hang" name="text_kh" type="text"
-                           placeholder="họ tên, địa chỉ, điện thoại"
-                           style="display: none" value="">
+                    {{--<input class="form-control khach_hang" name="text_kh" type="text"--}}
+                    {{--placeholder="họ tên, địa chỉ, điện thoại"--}}
+                    {{--style="display: none" value="">--}}
                 </td>
-                <td>
-                    <summary onclick="controlKH()" class="fas fa-sync-alt"></summary>
-                </td>
+                {{--<td>--}}
+                {{--<summary onclick="controlKH()" class="fas fa-sync-alt"></summary>--}}
+                {{--</td>--}}
             </tr>
             <tr>
                 <td>Số sản phẩm:</td>
@@ -50,16 +58,18 @@
             </tr>
             <tr>
                 <td>Giảm giá:</td>
-                <td id="sale">0 vnđ</td>
+                <td id="giam_gia">0 vnđ</td>
             </tr>
             <tr class="border-danger border-top">
                 <td>Thành tiền:</td>
-                <td id="thanh_tien">{{_manny($hoa_don->tong_tien)}} vnđ</td>
+                <td id="thanh_tien">{{_manny($hoa_don->tong_gia)}} vnđ</td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="pay()">Cập nhật</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="pay({{$hoa_don->id}})">Cập
+                        nhật
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -68,13 +78,13 @@
             <table align="center" width="100%"
                    class="table table-head-fixed table-hover table-striped border-danger text-center">
                 <thead>
-                <tr>
-                    <th class="bg-danger">STT</th>
-                    <th class="bg-danger">Tên sản phẩm</th>
-                    <th class="bg-danger">Số lượng mua</th>
-                    <th class="bg-danger">Giảm giá</th>
-                    <th class="bg-danger">Đơn giá</th>
-                    <th class="bg-danger">
+                <tr class="bg-primary">
+                    <th class="bg-primary">STT</th>
+                    <th class="bg-primary">Tên sản phẩm</th>
+                    <th class="bg-primary">Số lượng mua</th>
+                    <th class="bg-primary">Giảm giá</th>
+                    <th class="bg-primary">Đơn giá</th>
+                    <th class="bg-primary">
                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal">
                             +Thêm
                         </button>
@@ -101,7 +111,7 @@
                 <div class="modal-body table-responsive">
                     <table id="data-table" class="table table-hover table-striped table-bordered text-center">
                         <thead>
-                        <tr class="bg-danger">
+                        <tr class="bg-primary">
                             <th>Tên sản phẩm</th>
                             <th>Số lượng</th>
                             <th>Giảm giá</th>
@@ -114,7 +124,7 @@
                             <tr>
                                 <td>{{$val->ten_sp}}</td>
                                 <td>{{$val->so_luong}}</td>
-                                <td>{{$val->sale}}</td>
+                                <td>{{$val->giam_gia}}</td>
                                 <td>{{_manny($val->gia)}} vnđ</td>
                                 <td>
                                     <button type="button" id="sp-{{$val->id}}" class="btn btn-sm btn-success"
@@ -128,7 +138,7 @@
                     </table>
                     <script type="text/javascript">
                         var san_pham = [];
-                        var sale = 0;
+                        var giam_gia = 0;
                         var manny = 0;
 
                         function _manny(str) {
@@ -148,14 +158,14 @@
                             var str = "";
                             var i;
                             for (i = 0; i < san_pham.length; i++) {
-                                manny += ((100 - san_pham[i].sale) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
-                                sale += ((san_pham[i].sale) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
+                                manny += ((100 - san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
+                                giam_gia += ((san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
                                 str += "<tr>\n" +
                                     "<td>" + (i + 1) + "</td>\n" +
                                     "<td class=\"text-left\">" + san_pham[i].ten_sp + "</td>\n" +
                                     "<td><input style=\"width: 50px;\" onchange=\"sl(" + san_pham[i].id + ")\" id='sl-" + san_pham[i].id + "' type=\"number\" value=\"" + san_pham[i].sl_mua + "\"></td>\n" +
-                                    "<td>" + san_pham[i].sale + "%</td>\n" +
-                                    "<td>" + _manny("" + (100 - san_pham[i].sale) * san_pham[i].gia / 100 * san_pham[i].sl_mua) + " vnđ</td>\n" +
+                                    "<td>" + san_pham[i].giam_gia + "%</td>\n" +
+                                    "<td>" + _manny("" + (100 - san_pham[i].giam_gia) * san_pham[i].gia / 100 * san_pham[i].sl_mua) + " vnđ</td>\n" +
                                     "<td>\n" +
                                     "    <button type=\"button\" onclick=\"del(" + san_pham[i].id + ")\" id='del-" + san_pham[i].id + "' class=\"btn btn-sm btn-danger\">Xóa</button>\n" +
                                     "</td>\n" +
@@ -163,8 +173,8 @@
                             }
                             $('#san_pham').html(str);
                             $('#sl_mua').html(san_pham.length);
-                            $('#tong_tien').html(_manny("" + (manny + sale)) + " vnđ");
-                            $('#sale').html(_manny("" + sale) + " vnđ");
+                            $('#tong_tien').html(_manny("" + (manny + giam_gia)) + " vnđ");
+                            $('#giam_gia').html(_manny("" + giam_gia) + " vnđ");
                             $('#thanh_tien').html(_manny("" + manny) + " vnđ");
                         }
 
@@ -173,12 +183,12 @@
                             if (san_pham.findIndex(v => (v.id === obj.id)) === -1) {
                                 san_pham.push({...obj, sl_mua: 1});
                                 manny = 0;
-                                sale = 0;
+                                giam_gia = 0;
                                 printf();
                             }
                         }
 
-                        function pay() {
+                        function pay(id) {
                             if ($('select[name="id_kh"]').val() === "" && $('input[name="text_kh"]').val() === "") {
                                 alert("Vui lòng nhập khách hàng?");
                             } else if (san_pham.length === 0) {
@@ -190,19 +200,20 @@
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     }
                                 });
-                                $.post('', {
-                                    manny: manny,
-                                    san_pham: san_pham,
-                                    id_kh: $('select[name="id_kh"]').val(),
-                                    text_kh: $('input[name="text_kh"]').val(),
-                                }, function (data) {
-                                    if (data == 1) {
-                                        alert("Giao dịch thành công!");
-                                        location.href = "/admin/giao_dich";
-                                    } else {
-                                        alert("Giao dịch không thành công!")
+                                $.ajax({
+                                    url: '/admin/export/' + id,
+                                    method: 'PUT',
+                                    data: {
+                                        manny: manny,
+                                        san_pham: san_pham,
+                                        id_kh: $('select[name="id_kh"]').val(),
                                     }
-                                });
+                                }).done(function () {
+                                    alert("Giao dịch thành công!");
+                                    location.href = "/admin/export";
+                                }).fail(function () {
+                                    alert("Giao dịch không thành công!")
+                                })
                             }
                         }
 
@@ -211,7 +222,7 @@
                                 ...v, sl_mua: controlSl(v.so_luong, $('#sl-' + id).val())
                             } : v));
                             manny = 0;
-                            sale = 0;
+                            giam_gia = 0;
                             printf();
                         }
 
@@ -225,15 +236,11 @@
                             return newNum;
                         }
 
-                        function controlKH() {
-                            $('.khach_hang').toggle();
-                            $('input[name="text_kh"]').val(null);
-                        }
 
                         function del(id) {
                             $('#sp-' + id).show();
                             manny = 0;
-                            sale = 0;
+                            giam_gia = 0;
                             san_pham = san_pham.filter(v => v.id !== id);
                             printf();
                         }
@@ -249,12 +256,12 @@
         //
         $(document).ready(function () {
             var id = $('#san_pham').attr('detail');
-            $.get('/admin/giao_dich/' + id, function (data) {
+            $.get('/admin/export/' + id, function (data) {
                 for (var i = 0; i < data.cthd.length; i++) {
                     san_pham.push({
                         ...data.cthd[i].san_pham,
-                        sl_mua: data.cthd[i].sl_mua,
-                        so_luong: data.cthd[i].sl_mua + data.cthd[i].san_pham.so_luong
+                        sl_mua: data.cthd[i].so_luong,
+                        so_luong: data.cthd[i].so_luong + data.cthd[i].san_pham.so_luong
                     });
                 }
                 printf();

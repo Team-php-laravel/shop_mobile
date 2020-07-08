@@ -66,12 +66,12 @@
                    class="table table-head-fixed table-hover table-striped border-danger text-center">
                 <thead>
                 <tr>
-                    <th class="bg-danger">STT</th>
-                    <th class="bg-danger">Tên sản phẩm</th>
-                    <th class="bg-danger">Số lượng mua</th>
-                    <th class="bg-danger">Giảm giá</th>
-                    <th class="bg-danger">Đơn giá</th>
-                    <th class="bg-danger">
+                    <th class="bg-primary">STT</th>
+                    <th class="bg-primary">Tên sản phẩm</th>
+                    <th class="bg-primary">Số lượng mua</th>
+                    <th class="bg-primary">Giảm giá</th>
+                    <th class="bg-primary">Đơn giá</th>
+                    <th class="bg-primary">
                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal">
                             +Thêm
                         </button>
@@ -101,7 +101,7 @@
                 <div class="modal-body table-responsive">
                     <table id="data-table" class="table table-hover table-striped table-bordered text-center">
                         <thead>
-                        <tr class="bg-danger">
+                        <tr class="bg-primary">
                             <th>Tên sản phẩm</th>
                             <th>Số lượng</th>
                             <th>Giảm giá</th>
