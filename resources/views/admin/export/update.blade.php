@@ -26,17 +26,17 @@
                                 @if($val->id === $hoa_don->kh_id)
                                     <option value="kh{{$val->id}}" selected
                                             title="{{"KH - ".$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->sdt}}">
-                                        {{$val->ten_kh}}</option>
+                                        {{$val->sdt}} - {{$val->ten_kh}}</option>
                                 @else
                                     <option value="kh{{$val->id}}"
                                             title="{{"KH - ".$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->sdt}}">
-                                        {{$val->ten_kh}}</option>
+                                        {{$val->sdt}} - {{$val->ten_kh}}</option>
                                 @endif
                             @endforeach
                             @foreach($ncc as $val)
                                 <option value="nc{{$val->id}}" @if($hoa_don->ncc_id == $val->id) selected @endif
                                 title="{{"NCC - ".$val->ten_ncc.",".$val->dia_chi.",".$val->sdt.",".$val->ms_thue}}">
-                                    {{$val->ten_ncc}}</option>
+                                    {{$val->sdt}} - {{$val->ten_ncc}}</option>
                             @endforeach
                         </select>
                     </div>

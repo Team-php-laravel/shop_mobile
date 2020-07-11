@@ -52,7 +52,7 @@
                         {{$val->ncc->ten_ncc}}
                     </td>
                     <td>{{$val->san_pham->ten_sp}}</td>
-                    <td>{{date_format(date_create($val['created_at']), "H:i d/m/yy")}}</td>
+                    <td>{{date_format(date_create($val['ngay_nhap']), "H:i d/m/yy")}}</td>
                     <td>{{$val->so_luong}}</td>
                     <td>{{_manny($val->so_luong * $val->san_pham->gia)}} VNĐ</td>
                     <td>

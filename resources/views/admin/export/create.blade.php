@@ -20,21 +20,21 @@
                             @foreach($khach_hang as $val)
                                 <option value="kh{{$val->id}}"
                                         title="{{"KH - ".$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->sdt}}">
-                                    {{$val->ten_kh}}</option>
+                                    {{$val->sdt}} - {{$val->ten_kh}}</option>
                             @endforeach
                             @foreach($ncc as $val)
                                 <option value="nc{{$val->id}}"
                                         title="{{"NCC - ".$val->ten_ncc.",".$val->dia_chi.",".$val->sdt.",".$val->ms_thue}}">
-                                    {{$val->ten_ncc}}</option>
+                                    {{$val->sdt}} - {{$val->ten_ncc}}</option>
                             @endforeach
                         </select>
                     </div>
                     {{--<input class="form-control khach_hang" name="text_kh" type="text"--}}
-                           {{--placeholder="họ tên, địa chỉ, điện thoại"--}}
-                           {{--style="display: none" value="">--}}
+                    {{--placeholder="họ tên, địa chỉ, điện thoại"--}}
+                    {{--style="display: none" value="">--}}
                 </td>
                 {{--<td>--}}
-                    {{--<summary onclick="controlKH()" class="fas fa-sync-alt"></summary>--}}
+                {{--<summary onclick="controlKH()" class="fas fa-sync-alt"></summary>--}}
                 {{--</td>--}}
             </tr>
             <tr>

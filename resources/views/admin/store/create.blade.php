@@ -33,7 +33,7 @@
             @csrf
             <div class="form-group">
                 <label for="">Nhà cung cấp:</label>
-                <select class="form-control" name="ncc_id" required>
+                <select class="form-control select2" name="ncc_id" required>
                     <option value="">-------------chọn--------------</option>
                     @foreach($kh as $item)
                         <option value="{{$item->id}}">{{$item->ten_ncc}} - {{$item->ms_thue}}</option>
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label for="">Sản phẩm:</label>
-                <select class="form-control" name="sp_id" required>
+                <select class="form-control select2" name="sp_id" required>
                     <option value="">-------------chọn--------------</option>
                     @foreach($sp as $item)
                         <option value="{{$item->id}}">{{$item->ten_sp}} - {{$item->giam_gia}}% - {{_manny($item->gia)}}
@@ -51,17 +51,22 @@
                     @endforeach
                 </select>
             </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="">Đơn giá:</label>
+                    <input value="0" name="gia" type="number" class="form-control" required>
+                </div>
 
-            <div class="form-group">
-                <label for="">Đơn giá:</label>
-                <input value="0" name="gia" type="number" class="form-control" required>
+                <div class="form-group col-md-4">
+                    <label for="">Số lượng nhập:</label>
+                    <input value="1" name="so_luong" type="number" class="form-control" required>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="">Ngày nhập:</label>
+                    <input name="ngay_nhap" type="datetime-local" class="form-control" required>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="">Số lượng nhập:</label>
-                <input value="1" name="so_luong" type="number" class="form-control" required>
-            </div>
-
             <div class="text-center mt-4">
                 <button class="btn btn-sm btn-outline-primary" type="submit">
                     +Thêm ngay

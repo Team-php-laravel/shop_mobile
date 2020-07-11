@@ -54,15 +54,22 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="">Đơn giá:</label>
-                <input value="{{$store->gia}}" name="so_luong" type="number" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="">Số lượng mua:</label>
-                <input value="{{$store->so_luong}}" name="so_luong" type="number" class="form-control" required>
-            </div>
+            <div class="row">
+                <div class="form-group  col-md-4">
+                    <label for="">Đơn giá:</label>
+                    <input value="{{$store->gia}}" name="so_luong" type="number" class="form-control" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="">Số lượng mua:</label>
+                    <input value="{{$store->so_luong}}" name="so_luong" type="number" class="form-control" required>
+                </div>
 
+                <div class="form-group col-md-4">
+                    <label for="">Ngày nhập:</label>
+                    <input name="ngay_nhap" type="datetime-local" value="{{date_format(new DateTime($store->ngay_nhap), 'yy-m-d') . "T".date_format(new DateTime($store->ngay_nhap), 'h:s')}}" class="form-control"
+                           required>
+                </div>
+            </div>
             <div class="text-center mt-4">
                 <button class="btn btn-sm btn-outline-warning" type="submit">
                     Cập nhật
