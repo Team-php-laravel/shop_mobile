@@ -56,9 +56,9 @@ class ExportController extends Controller
                 $ncc_id = substr($request->id_kh, 2);
 
             if ($tg == 1)
-                $hd = hoa_don::create(['kh_id' => $kh_id, 'tong_gia' => $request->manny, 'user_id' => Auth::user()->id]);
+                $hd = hoa_don::create(['kh_id' => $kh_id, 'tong_gia' => $request->manny, 'user_id' => Auth::user()->id, 'type_id' => 1]);
             else
-                $hd = hoa_don::create(['ncc_id' => $ncc_id, 'tong_gia' => $request->manny, 'user_id' => Auth::user()->id]);
+                $hd = hoa_don::create(['ncc_id' => $ncc_id, 'tong_gia' => $request->manny, 'user_id' => Auth::user()->id, 'type_id' => 1]);
 
             foreach ($request->san_pham as $val) {
                 cthd::create(['hd_id' => $hd->id, 'sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'don_gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100)]);
@@ -125,9 +125,9 @@ class ExportController extends Controller
                 $ncc_id = substr($request->id_kh, 2);
 
             if ($tg == 1)
-                hoa_don::findOrFail($id)->update(['kh_id' => $kh_id, 'tong_gia' => $request->manny]);
+                hoa_don::findOrFail($id)->update(['kh_id' => $kh_id, 'tong_gia' => $request->manny, 'type_id' => 1]);
             else
-                hoa_don::findOrFail($id)->update(['kh_id' => $ncc_id, 'tong_gia' => $request->manny]);
+                hoa_don::findOrFail($id)->update(['kh_id' => $ncc_id, 'tong_gia' => $request->manny, 'type_id' => 1]);
 
 
             foreach ($request->san_pham as $val) {

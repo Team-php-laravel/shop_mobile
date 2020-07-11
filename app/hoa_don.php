@@ -8,7 +8,7 @@ class hoa_don extends Model
 {
     //
     protected $table = "hoa_don";
-    protected $fillable = ['kh_id', 'user_id', 'ngay_tao', 'tong_gia'];
+    protected $fillable = ['kh_id', 'user_id', 'ngay_tao', 'tong_gia', 'type_id'];
     public $timestamps = false;
 
     public function khach_hang()
