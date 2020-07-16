@@ -12,30 +12,19 @@
         <table align="center" class="text-right">
             <tbody id="data1">
             <tr>
-                <td>Khách hàng:</td>
+                <td>Đơn hàng:</td>
                 <td style="width: 240px;text-align: left">
                     <div class="form-group m-0 khach_hang">
-                        <select value="" class="form-control select2" name="id_kh" style="width: 100%;">
+                        <select value="" onchange="__loadData(event)" class="form-control select2" name="id_kh"
+                                style="width: 100%;">
                             <option value="">-----------------Chọn---------------</option>
-                            @foreach($khach_hang as $val)
-                                <option value="kh{{$val->id}}"
-                                        title="{{"KH - ".$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->sdt}}">
-                                    {{$val->sdt}} - {{$val->ten_kh}}</option>
-                            @endforeach
-                            @foreach($ncc as $val)
-                                <option value="nc{{$val->id}}"
-                                        title="{{"NCC - ".$val->ten_ncc.",".$val->dia_chi.",".$val->sdt.",".$val->ms_thue}}">
-                                    {{$val->sdt}} - {{$val->ten_ncc}}</option>
+                            @foreach($hd as $val)
+                                <option value="{{$val->id}}">
+                                    HD00{{$val->id}} - {{$val->khach_hang->ten_kh}} - {{$val->khach_hang->sdt}}</option>
                             @endforeach
                         </select>
                     </div>
-                    {{--<input class="form-control khach_hang" name="text_kh" type="text"--}}
-                    {{--placeholder="họ tên, địa chỉ, điện thoại"--}}
-                    {{--style="display: none" value="">--}}
                 </td>
-                {{--<td>--}}
-                {{--<summary onclick="controlKH()" class="fas fa-sync-alt"></summary>--}}
-                {{--</td>--}}
             </tr>
             <tr>
                 <td>Số sản phẩm:</td>
@@ -170,15 +159,17 @@
 
                         function book(obj) {
                             $('#sp-' + obj.id).hide();
-                            san_pham.push({...obj, sl_mua: 1});
-                            manny = 0;
-                            giam_gia = 0;
-                            printf();
+                            if (san_pham.findIndex(v => (v.id === obj.id)) === -1) {
+                                san_pham.push({...obj, sl_mua: 1});
+                                manny = 0;
+                                giam_gia = 0;
+                                printf();
+                            }
                         }
 
                         function pay() {
-                            if ($('select[name="id_kh"]').val() === "" && $('input[name="text_kh"]').val() === "") {
-                                alert("Vui lòng nhập khách hàng?");
+                            if ($('select[name="id_kh"]').val() === "") {
+                                alert("Vui lòng chọn đơn hàng xuất?");
                             } else if (san_pham.length === 0) {
                                 alert("Vui lòng chọn sản phẩm?")
                             }
@@ -188,18 +179,19 @@
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     }
                                 });
-                                $.post('/admin/export', {
-                                    manny: manny,
-                                    san_pham: san_pham,
-                                    id_kh: $('select[name="id_kh"]').val()
-                                }, function (data) {
-                                    if (data == 1) {
-                                        alert("Giao dịch thành công!");
-                                        location.href = "/admin/export";
-                                    } else {
-                                        alert("Giao dịch không thành công!")
+                                $.ajax({
+                                    url: '/admin/export/'+$('select[name="id_kh"]').val(),
+                                    method: 'PUT',
+                                    data: {
+                                        manny: manny,
+                                        san_pham: san_pham
                                     }
-                                });
+                                }).done(function () {
+                                    alert("Giao dịch thành công!");
+                                    location.href = "/admin/export";
+                                }).fail(function () {
+                                    alert("Giao dịch không thành công!")
+                                })
                             }
                         }
 
@@ -230,6 +222,21 @@
                             giam_gia = 0;
                             san_pham = san_pham.filter(v => v.id !== id);
                             printf();
+                        }
+
+                        function __loadData(event) {
+                            var id = event.target.value;
+                            san_pham = [];
+                            $.get('/admin/export/' + id, function (data) {
+                                for (var i = 0; i < data.cthd.length; i++) {
+                                    san_pham.push({
+                                        ...data.cthd[i].san_pham,
+                                        sl_mua: data.cthd[i].so_luong,
+                                        so_luong: data.cthd[i].so_luong + data.cthd[i].san_pham.so_luong
+                                    });
+                                }
+                                printf();
+                            })
                         }
                     </script>
                 </div>

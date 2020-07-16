@@ -23,7 +23,7 @@ class storeController extends Controller
      */
     public function index()
     {
-        $store = nhap_kho::with('ncc', 'san_pham')->get();
+        $store = nhap_kho::with('ncc')->where('parent_id', 0)->get();
         return view('admin.store.index', compact('store'));
     }
 
@@ -35,8 +35,8 @@ class storeController extends Controller
     public function create()
     {
         $kh = ncc::all();
-        $sp = san_pham::all();
-        return view('admin.store.create', compact('kh', 'sp'));
+        $san_pham = san_pham::all();
+        return view('admin.store.create', compact('kh', 'san_pham'));
     }
 
     /**
@@ -47,9 +47,12 @@ class storeController extends Controller
      */
     public function store(Request $request)
     {
-        $sp = san_pham::find($request->sp_id);
-        $sp->update(['so_luong' => $sp->so_luong + $request->so_luong]);
-        nhap_kho::create($request->all());
+        $nhap = nhap_kho::create(['ncc_id' => $request->ncc_id, 'ngay_nhap' => $request->ngay_nhap, 'gia' => $request->manny]);
+        foreach ($request->san_pham as $val) {
+            $sp = san_pham::find($val['id']);
+            $sp->update(['so_luong' => $sp->so_luong + $request->so_luong]);
+            nhap_kho::create(['sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100), 'parent_id' => $nhap->id]);
+        }
         return redirect('admin/store')->with("message", "Nhập sản phẩm thành công !");
     }
 
@@ -63,9 +66,9 @@ class storeController extends Controller
     {
         //
         $kh = ncc::get();
-        $sp = san_pham::get();
+        $san_pham = san_pham::get();
         $store = nhap_kho::find($id);
-        return view('admin.store.update', compact('store', 'kh', 'sp'));
+        return view('admin.store.update', compact('store', 'kh', 'san_pham'));
     }
 
     /**
@@ -76,7 +79,8 @@ class storeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $san_pham = nhap_kho::with('san_pham')->where('parent_id', $id)->get();
+        return response()->json(['sp' => $san_pham]);
     }
 
     /**
@@ -89,14 +93,28 @@ class storeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $store = nhap_kho::find($id);
-        $sp = san_pham::find($request->sp_id);
-        if ($sp->so_luong - $store->so_luong + $request->so_luong < 0) {
-            return redirect('admin/store')->with("error", "Thất bại, sản phẩm trong kho không đủ!");
+        nhap_kho::find($id)->update(['ncc_id' => $request->ncc_id, 'gia' => $request->manny]);
+        $del = nhap_kho::where('parent_id', $id);
+        foreach ($del->get() as $val) {
+            $san_pham = san_pham::findOrFail($val->sp_id);
+            $san_pham->update(['so_luong' => ($san_pham->so_luong + $val->so_luong)]);
         }
-        $sp->update(['so_luong' => $sp->so_luong - $store->so_luong + $request->so_luong]);
-        $store->update($request->all());
-        return redirect('admin/store')->with("message", "Cập nhật loại sản phẩm thành công !");
+        $del->delete();
+        foreach ($request->san_pham as $val) {
+            $sp = san_pham::find($val['id']);
+            $sp->update(['so_luong' => $sp->so_luong - $request->so_luong]);
+            nhap_kho::create(['sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100), 'parent_id' => $id]);
+        }
+        return 1;
+
+//        $store = nhap_kho::find($id);
+//        $sp = san_pham::find($request->sp_id);
+//        if ($sp->so_luong - $store->so_luong + $request->so_luong < 0) {
+//            return redirect('admin/store')->with("error", "Thất bại, sản phẩm trong kho không đủ!");
+//        }
+//        $sp->update(['so_luong' => $sp->so_luong - $store->so_luong + $request->so_luong]);
+//        $store->update($request->all());
+//        return redirect('admin/store')->with("message", "Cập nhật loại sản phẩm thành công !");
     }
 
     /**
@@ -109,13 +127,8 @@ class storeController extends Controller
     {
         //
         try {
-            $store = nhap_kho::find($id);
-            $sp = san_pham::find($store->san_pham_id);
-            if ($sp->so_luong - $store->sl_nhap < 0) {
-                return redirect('admin/store')->with("error", "Sản phẩm đã bán không thể xóa!");
-            }
-            $sp->update(['so_luong' => $sp->so_luong - $store->sl_nhap]);
-            $store->delete();
+            nhap_kho::find($id)->delete();
+            nhap_kho::where('parent_id', $id)->delete();
             return redirect('admin/store')->with("message", "Xóa thành công!");
         } catch (\Exception $e) {
             return redirect('admin/store')->with("error", "Sản phẩm đã bán không thể xóa!");

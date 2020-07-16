@@ -40,6 +40,7 @@
                 <th style="width: 100px">Hình ảnh</th>
                 <th>Thông tin</th>
                 <th>Thành tiền</th>
+                <th>Trạng thái</th>
                 <th>
                     <button class="btn btn-sm btn-success"
                             onclick="location.href = 'create?id={{$cat->id}}&cat={{$cat->ten_loai}}'">+Thêm
@@ -56,12 +57,29 @@
                         <img class="w-100" src="/uploads/product/{{$val->hinh_anh}}" alt="Ảnh">
                     </td>
                     <td class="text-left">
-                        <p>Màu sắc: {{$val->mau_sac}}</p>
+                        <p>Thuộc tính: {{$val->mau_sac}}</p>
                         <p>Số lương: {{$val->so_luong}}</p>
                         <p>Đơn giá: {{_manny($val->gia)}} VNĐ <span class="text-danger">-{{$val->giam_gia}}%</span></p>
                     </td>
                     <td>
                         {{_manny(($val->gia - $val->gia*$val->giam_gia/100)."")}} VNĐ
+                    </td>
+                    <td>
+                        <form action="/admin/product/{{$val->id}}" method="POST">
+                            @method('PUT')
+                            @csrf
+                            <input class="d-none" name="trang_thai" type="text" value="{{$val->trang_thai == 1 ? 0:1}}">
+                            @if($val->trang_thai == 1)
+                                <button class="btn btn-sm btn-outline-primary"
+                                        type="submit">Hiển thị
+                                </button>
+                            @else
+                                <button class="btn btn-sm btn-outline-danger"
+                                        type="submit">
+                                    Đang ẩn
+                                </button>
+                            @endif
+                        </form>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-warning"

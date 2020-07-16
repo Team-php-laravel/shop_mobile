@@ -33,9 +33,8 @@ class ExportController extends Controller
     public function create()
     {
         $san_pham = san_pham::where('so_luong', '>', 0)->get();
-        $khach_hang = khach_hang::all();
-        $ncc = ncc::all();
-        return view('admin.export.create', compact('san_pham', 'khach_hang', 'ncc'));
+        $hd = hoa_don::with('khach_hang')->where('type_id', 0)->get();
+        return view('admin.export.create', compact('san_pham', 'hd'));
     }
 
     /**
@@ -116,25 +115,35 @@ class ExportController extends Controller
             }
             $cthd->delete();
 
-            $temp = substr($request->id_kh, 0, 2);
-            $tg = 0;
-            if ($temp == 'kh') {
-                $tg = 1;
-                $kh_id = substr($request->id_kh, 2);
-            } else
-                $ncc_id = substr($request->id_kh, 2);
+            if (isset($request->id_kh)) {
+                $temp = substr($request->id_kh, 0, 2);
+                $tg = 0;
+                if ($temp == 'kh') {
+                    $tg = 1;
+                    $kh_id = substr($request->id_kh, 2);
+                } else
+                    $ncc_id = substr($request->id_kh, 2);
 
-            if ($tg == 1)
-                hoa_don::findOrFail($id)->update(['kh_id' => $kh_id, 'tong_gia' => $request->manny, 'type_id' => 1]);
-            else
-                hoa_don::findOrFail($id)->update(['kh_id' => $ncc_id, 'tong_gia' => $request->manny, 'type_id' => 1]);
+                if ($tg == 1)
+                    hoa_don::findOrFail($id)->update(['kh_id' => $kh_id, 'tong_gia' => $request->manny, 'type_id' => 1]);
+                else
+                    hoa_don::findOrFail($id)->update(['kh_id' => $ncc_id, 'tong_gia' => $request->manny, 'type_id' => 1]);
 
 
-            foreach ($request->san_pham as $val) {
-                cthd::create(['hd_id' => $id, 'sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'don_gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100)]);
-                $sp = san_pham::find($val['id']);
-                $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                foreach ($request->san_pham as $val) {
+                    cthd::create(['hd_id' => $id, 'sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'don_gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100)]);
+                    $sp = san_pham::find($val['id']);
+                    $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                }
+            } else {
+                hoa_don::findOrFail($id)->update(['type_id' => 1]);
+                foreach ($request->san_pham as $val) {
+                    cthd::create(['hd_id' => $id, 'sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'don_gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100)]);
+                    $sp = san_pham::find($val['id']);
+                    $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                }
             }
+
             return 1;
         } catch (\Exception $e) {
             return 0;

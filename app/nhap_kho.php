@@ -8,7 +8,7 @@ class nhap_kho extends Model
 {
     //
     protected $table = "nhap_kho";
-    protected $fillable = ['ncc_id', 'sp_id', 'gia', 'so_luong' , 'ngay_nhap'];
+    protected $fillable = ['ncc_id', 'sp_id', 'gia', 'so_luong', 'ngay_nhap', 'parent_id'];
     public $timestamps = false;
 
     public function ncc()

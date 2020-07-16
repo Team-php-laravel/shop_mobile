@@ -35,9 +35,7 @@
             <tr class="bg-primary">
                 <th>STT</th>
                 <th>Tên nhà cung cấp</th>
-                <th>Tên sản phẩm</th>
                 <th>Ngày nhập</th>
-                <th>Số lượng nhập</th>
                 <th>Tổng tiền</th>
                 <th style="width: 150px">
                     <button class="btn btn-sm btn-success" onclick="location.href = 'store/create'">+Thêm</button>
@@ -51,13 +49,11 @@
                     <td>
                         {{$val->ncc->ten_ncc}}
                     </td>
-                    <td>{{$val->san_pham->ten_sp}}</td>
                     <td>{{date_format(date_create($val['ngay_nhap']), "H:i d/m/yy")}}</td>
-                    <td>{{$val->so_luong}}</td>
-                    <td>{{_manny($val->so_luong * $val->san_pham->gia)}} VNĐ</td>
+                    <td>{{_manny($val->gia)}} VNĐ</td>
                     <td>
-                        <button class="btn btn-sm btn-warning"
-                                onclick="location.href = 'store/{{$val->id}}'">Cập nhật
+                        <button class="btn btn-sm btn-primary"
+                                onclick="location.href = 'store/{{$val->id}}'">Xem
                         </button>
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">

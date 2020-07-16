@@ -17,9 +17,9 @@ class PageController extends Controller
     public function home()
     {
         if (isset(\request()->search)) {
-            $sp_new = san_pham::where('ten_sp', 'like', '%' . \request()->search . '%')->orderBy('created_at', 'desc')->get();
+            $sp_new = san_pham::where('ten_sp', 'like', '%' . \request()->search . '%')->where('trang_thai', 1)->orderBy('created_at', 'desc')->get();
         } else {
-            $sp_new = san_pham::orderBy('created_at', 'desc')->get();
+            $sp_new = san_pham::orderBy('created_at', 'desc')->where('trang_thai', 1)->get();
         }
         $news = tin_tuc::limit(5)->get();
         return view('home', compact('sp_new', 'news'));
@@ -28,7 +28,7 @@ class PageController extends Controller
     public function sale()
     {
         $news = tin_tuc::limit(5)->get();
-        $sp_new = san_pham::where('giam_gia', '>', '0')->orderBy('created_at', 'desc')->get();
+        $sp_new = san_pham::where('giam_gia', '>', '0')->where('trang_thai', 1)->orderBy('created_at', 'desc')->get();
         return view('sale', compact('sp_new', 'news'));
     }
 
@@ -44,9 +44,9 @@ class PageController extends Controller
         if ($cat->loai_id == 0) {
             $sp = loai_sp::where('loai_id', $id)->get()->toArray();
             $ids = array_column($sp, 'id');
-            $sp = sizeof($ids) <= 0 ? [] : san_pham::where('loai_id', $ids)->get();
+            $sp = sizeof($ids) <= 0 ? [] : san_pham::where('loai_id', $ids)->where('trang_thai', 1)->get();
         } else {
-            $sp = san_pham::where('loai_id', $id)->get();
+            $sp = san_pham::where('loai_id', $id)->where('trang_thai', 1)->get();
         }
         return view('cat', compact('sp', 'cat'));
     }

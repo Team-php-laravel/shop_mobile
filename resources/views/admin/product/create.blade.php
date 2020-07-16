@@ -49,7 +49,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="">Màu sắc:</label>
+                    <label for="">Thuộc tính:</label>
                     <input type="text" name="mau_sac" class="form-control" placeholder=""
                            aria-describedby="helpId" required>
                 </div>
