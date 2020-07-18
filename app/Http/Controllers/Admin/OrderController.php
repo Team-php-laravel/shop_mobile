@@ -24,7 +24,7 @@ class orderController extends Controller
      */
     public function index()
     {
-        $order = hoa_don::with('khach_hang', 'user', 'cthd')->where('type_id', 0)->get();
+        $order = hoa_don::with('khach_hang', 'user', 'cthd')->where('type_id', 0)->orderBy('id', 'desc')->get();
 
         return view('admin.order.index', compact('order'));
     }

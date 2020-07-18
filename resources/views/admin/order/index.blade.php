@@ -67,9 +67,12 @@
                         <p>Địa chỉ: {{$val->khach_hang->dia_chi}}</p>
                     </td>
                     <td style="min-width: 300px" class="text-left">
-                        <p>Sản phẩm: {{\App\san_pham::find($val->cthd->sp_id)->ten_sp}}</p>
-                        <p>Số lượng: {{$val->cthd->so_luong}}</p>
-                        <p>Đơn giá: {{_manny($val->cthd->don_gia)}} VNĐ</p>
+                        @php(
+                        $cthd = \App\cthd::with('san_pham')->where('hd_id', $val->id)->get()
+                        )
+                        @foreach($cthd as $v)
+                            <p>Sản phẩm: {{$v->san_pham->ten_sp}}</p>
+                        @endforeach
                     </td>
                     <td style="min-width: 150px">
                         {{date_format(date_create($val['created_at']), "H:i d/m/yy")}}<br>
