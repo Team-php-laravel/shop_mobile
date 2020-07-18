@@ -352,7 +352,7 @@
                 </div>
                 <div style="text-align: center;display: flex;align-items: center;justify-content: center;">
                     <select onchange="show_stk(event)" class="form-control"
-                            style="padding: unset; margin-bottom:0;margin-right: 10px">
+                            style="width: fit-content;padding: unset; margin-bottom:0;margin-right: 10px">
                         <option value="1">Thanh toán trực tiếp</option>
                         <option value="2">Thanh toán chuyển khoản</option>
                     </select>
