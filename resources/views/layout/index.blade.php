@@ -273,8 +273,8 @@
                     '    <div>\n' +
                     '        <p>Ảnh</p>\n' +
                     '    </div>\n' +
-                    '    <div ><p>Sản phẩm</p></div>\n' +
-                    '    <div><p>Số lượng</p></div>\n' +
+                    '    <div style="margin-left: 60px;"><p>Sản phẩm</p></div>\n' +
+                    '    <div style="margin-left: 40px;"><p>Số lượng</p></div>\n' +
                     '    <div ><p>Thành tiền</p></div><div></div>\n' +
                     '</div>';
                 var sl_mua = 0;
@@ -289,7 +289,7 @@
                         '        <img style="height: 50px; width: 50px" src="/uploads/product/' + v.hinh_anh + '" alt="ảnh">\n' +
                         '    </div>\n' +
                         '    <div>\n' +
-                        '        <p style="max-width: 150px" class="text-danger">' + v.ten_sp + '</p>\n' +
+                        '        <p style="width: 150px" class="text-danger">' + v.ten_sp + '</p>\n' +
                         '    </div>\n' +
                         '    <div>\n' +
                         '        <input style="width: 40px" onchange="getCart()" id="item-' + v.id + '" type="number" value="' + sl_mua + '">\n' +
