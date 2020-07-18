@@ -22,6 +22,7 @@ Route::get('/detail/{id}', 'PageController@detail');
 Route::post('/cart', 'PageController@cart');
 Route::post('/orderCart', 'PageController@orderCart');
 Route::get('/cart', 'PageController@getCart');
+Route::delete('/del_cart/{id}', 'PageController@delCart');
 
 
 /*

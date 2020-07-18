@@ -93,22 +93,22 @@ class PageController extends Controller
 
     public function orderCart(Request $request)
     {
-        $kh = khach_hang::updateOrCreate(['ten_kh' => $request->ten_kh, 'email' => $request->email, 'dien_thoai' => $request->dien_thoai], ['dia_chi' => $request->dia_chi]);
+        $kh = khach_hang::updateOrCreate(['ten_kh' => $request->ten_kh, 'email' => $request->email, 'sdt' => $request->sdt], ['dia_chi' => $request->dia_chi]);
         $hd = hoa_don::create([
-            'khach_hang_id' => $kh->id,
-            'tong_tien' => $request->tong_tien,
-            'create_by' => Auth::user()->id
+            'kh_id' => $kh->id,
+            'tong_gia' => $request->tong_tien,
+            'user_id' => Auth::user()->id
         ]);
 
         foreach ($request->san_pham as $item) {
             cthd::create([
-                'hoa_don_id' => $hd->id,
-                'san_pham_id' => $item['id'],
-                'sl_mua' => $item['sl_mua'],
+                'hd_id' => $hd->id,
+                'sp_id' => $item['id'],
+                'so_luong' => $item['sl_mua'],
                 'don_gia' => $item['don_gia'],
             ]);
         }
-
+        \Session::put('cart', []);
         return 1;
     }
 
@@ -117,5 +117,19 @@ class PageController extends Controller
         $cart = \Session::get('cart') ?: [];
         $sp = san_pham::whereIn('id', $cart)->get();
         return $sp;
+    }
+
+    public function delCart($id)
+    {
+        global $id_del;
+        $id_del = $id;
+        $cart = \Session::get('cart');
+        $cart_new = array_filter($cart, function ($val) {
+            global $id_del;
+            return ($val != $id_del);
+        });
+        \Session::put('cart', $cart_new);
+
+        return 1;
     }
 }

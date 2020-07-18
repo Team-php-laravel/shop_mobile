@@ -50,7 +50,7 @@ class storeController extends Controller
         $nhap = nhap_kho::create(['ncc_id' => $request->ncc_id, 'ngay_nhap' => $request->ngay_nhap, 'gia' => $request->manny]);
         foreach ($request->san_pham as $val) {
             $sp = san_pham::find($val['id']);
-            $sp->update(['so_luong' => $sp->so_luong + $request->so_luong]);
+            $sp->update(['so_luong' => $sp->so_luong + $val['sl_mua']]);
             nhap_kho::create(['sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100), 'parent_id' => $nhap->id]);
         }
         return redirect('admin/store')->with("message", "Nhập sản phẩm thành công !");
@@ -102,7 +102,7 @@ class storeController extends Controller
         $del->delete();
         foreach ($request->san_pham as $val) {
             $sp = san_pham::find($val['id']);
-            $sp->update(['so_luong' => $sp->so_luong - $request->so_luong]);
+            $sp->update(['so_luong' => $sp->so_luong - $val['sl_mua']]);
             nhap_kho::create(['sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100), 'parent_id' => $id]);
         }
         return 1;

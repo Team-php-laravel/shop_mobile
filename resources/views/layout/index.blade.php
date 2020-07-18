@@ -267,9 +267,7 @@
         var ttien = 0;
 
         function getCart() {
-            console.log(1);
             $.get('/cart', function (data) {
-                console.log(data);
                 var str =
                     '<div style="margin-left: 20px;display:flex;text-align: center;justify-content: space-between;">\n' +
                     '    <div>\n' +
@@ -291,7 +289,7 @@
                         '        <img style="height: 50px; width: 50px" src="/uploads/product/' + v.hinh_anh + '" alt="ảnh">\n' +
                         '    </div>\n' +
                         '    <div>\n' +
-                        '        <p class="text-danger">' + v.ten_sp + '</p>\n' +
+                        '        <p style="max-width: 150px" class="text-danger">' + v.ten_sp + '</p>\n' +
                         '    </div>\n' +
                         '    <div>\n' +
                         '        <input style="width: 40px" onchange="getCart()" id="item-' + v.id + '" type="number" value="' + sl_mua + '">\n' +
@@ -299,7 +297,7 @@
                         '    <div>\n' +
                         '        <p class="text-danger">' + _money((v.gia * sl_mua) + "") + 'đ</p>\n' +
                         '    </div>\n' +
-                        '    <div>x</div>\n' +
+                        '    <div style="cursor: pointer" onclick="delCart(' + v.id + ')">x</div>\n' +
                         '</div>' +
                         '';
                 });
@@ -352,10 +350,38 @@
                     <input type="text" name="dia_chi" class="form-control w-100"
                            placeholder="" aria-describedby="helpId" required>
                 </div>
-                <div style="text-align: center" onclick="orderr()">
-                    <bttton class="btn btn-primary">Thanh toán</bttton>
+                <div style="text-align: center;display: flex;align-items: center;justify-content: center;">
+                    <select onchange="show_stk(event)" class="form-control"
+                            style="padding: unset; margin-bottom:0;margin-right: 10px">
+                        <option value="1">Thanh toán trực tiếp</option>
+                        <option value="2">Thanh toán chuyển khoản</option>
+                    </select>
+                    <bttton class="btn btn-primary" onclick="orderr()">Thanh toán</bttton>
+                </div>
+                <div id="stk" style="display: none; text-align: center">
+                    Techcombank: 19128325224018
                 </div>
                 <script>
+
+                    function delCart(id) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: '/del_cart/' + id,
+                            method: 'DELETE'
+                        }).done(function () {
+                            getCart();
+                        }).fail(function () {
+                            getCart();
+                        })
+                    }
+
+                    function show_stk(e) {
+                        e.target.value == 2 ? $('#stk').show() : $('#stk').hide();
+                    }
 
                     // Get the modal
                     var modal = document.getElementById("myModal");
@@ -427,12 +453,11 @@
                             san_pham: obj,
                             tong_tien: ttien
                         }, function (data) {
-                            console.log(data);
                             if (data == 1) {
-                                alert("Đặt hàng thành công, vui lòng chờ điện thoại xác nhận!");
-                                $('#exampleModalCenter').modal('hide');
+                                getCart();
+                                alert("Thanh toán thành công");
                             } else {
-                                alert("Đặt hàng thất bại, vui lòng thử lại!");
+                                alert("Thanh toán thất bại, vui lòng thử lại!");
                             }
                         });
                     }
