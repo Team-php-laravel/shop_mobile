@@ -36,6 +36,7 @@
                 <th>
                     {{--<button class="btn btn-sm btn-success" onclick="location.href = 'order/create'">+Thêm</button>--}}
                 </th>
+                <th>Trạng thái</th>
                 <th>Mã hóa đơn</th>
                 <th>Tên khách hàng</th>
                 <th>Thông tin</th>
@@ -47,7 +48,7 @@
             <tbody>
             @foreach($order as $key=>$val)
                 <tr>
-                    <td style="min-width: 150px">
+                   <td style="min-width: 150px">
                         <button class="btn btn-sm btn-outline-danger"
                                 onclick="confirm('Đồng ý xóa?') ? document.getElementById('{{"delete".$val->id}}').submit():''">
                             Xóa
@@ -56,6 +57,9 @@
                             @method('DELETE')
                             @csrf
                         </form>
+                    </td>
+                    <td style="min-width: 100px">
+                        <p class="{{$val->type_id == 0 ? 'Đang chờ':'text-primary'}}">{{$val->type_id == 0 ? 'Đang chờ':'Đã xuất'}}</p>
                     </td>
                     <td style="min-width: 100px">HĐ00{{$val->id}}</td>
                     <td style="min-width: 150px">

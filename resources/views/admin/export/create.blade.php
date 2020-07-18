@@ -137,8 +137,8 @@
                             var str = "";
                             var i;
                             for (i = 0; i < san_pham.length; i++) {
-                                manny += ((100 - san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
                                 giam_gia += ((san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
+                                manny += ((100 - san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
                                 str += "<tr>\n" +
                                     "<td>" + (i + 1) + "</td>\n" +
                                     "<td class=\"text-left\">" + san_pham[i].ten_sp + "</td>\n" +
@@ -180,7 +180,7 @@
                                     }
                                 });
                                 $.ajax({
-                                    url: '/admin/export/'+$('select[name="id_kh"]').val(),
+                                    url: '/admin/export/' + $('select[name="id_kh"]').val(),
                                     method: 'PUT',
                                     data: {
                                         manny: manny,

@@ -282,8 +282,8 @@
                 obj = [];
                 data.map(v => {
                     sl_mua = $('#item-' + v.id).val() > 0 ? $('#item-' + v.id).val() : 1;
-                    ttien += v.gia * sl_mua;
-                    obj = [...obj, {...v, sl_mua: sl_mua, don_gia: v.gia * sl_mua}];
+                    ttien += (v.gia - v.gia * v.giam_gia/100) * sl_mua;
+                    obj = [...obj, {...v, sl_mua: sl_mua, don_gia: (v.gia - v.gia * v.giam_gia/100) * sl_mua }];
                     str += '<div style="display:flex;text-align: center;justify-content: space-between;">\n' +
                         '    <div>\n' +
                         '        <img style="height: 50px; width: 50px" src="/uploads/product/' + v.hinh_anh + '" alt="ảnh">\n' +
@@ -295,7 +295,7 @@
                         '        <input style="width: 40px" onchange="getCart()" id="item-' + v.id + '" type="number" value="' + sl_mua + '">\n' +
                         '    </div>\n' +
                         '    <div>\n' +
-                        '        <p class="text-danger">' + _money((v.gia * sl_mua) + "") + 'đ</p>\n' +
+                        '        <p class="text-danger">' + _money(((v.gia - v.gia * v.giam_gia/100) * sl_mua) + "") + 'đ</p>\n' +
                         '    </div>\n' +
                         '    <div style="cursor: pointer" onclick="delCart(' + v.id + ')">x</div>\n' +
                         '</div>' +
