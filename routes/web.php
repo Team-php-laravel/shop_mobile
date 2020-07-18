@@ -19,6 +19,9 @@ Route::get('/news', 'PageController@news');
 Route::get('/new-detail/{id}', 'PageController@newDetail');
 Route::post('/order', 'PageController@order');
 Route::get('/detail/{id}', 'PageController@detail');
+Route::post('/cart', 'PageController@cart');
+Route::post('/orderCart', 'PageController@orderCart');
+Route::get('/cart', 'PageController@getCart');
 
 
 /*

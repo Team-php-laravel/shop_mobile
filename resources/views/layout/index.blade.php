@@ -112,7 +112,6 @@
             </div>
             <!-- END OF OGO -->
             <!-- PHONE -->
-            <div class="span2"></div>
             <div class="span3 tisophoneheader">
                 <div class="t3-module module_phone" id="Mod101">
                     <div class="module-inner">
@@ -129,7 +128,7 @@
 
             </div>
             <!-- END OF PHONE -->
-            <div class="span4 item-first">
+            <div class="span3 item-first">
                 <div class="t3-module module" id="Mod680">
                     <div class="custom">
                         <div class="search-box">
@@ -139,6 +138,21 @@
                                 <i class="icon-search"></i>
                                 <div class="result">&nbsp;</div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span2 item-last">
+                <div class="t3-module module_cart">
+                    <div class="module-inner">
+                        <div class="module-ct">
+                            <!-- Virtuemart 2 Ajax Card -->
+                            <a id="myBtn" class="btn vmCartModule_ajax vmCartModule btn btn-danger">
+                                <div class="miniart">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    Giỏ hàng
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -227,21 +241,217 @@
                                     <span class="image-title">Tin tức</span>
                                 </a>
                             </li>
-                            {{--<li>--}}
-                            {{--<a class="mnu-img" href="/contact" data-target="#">--}}
-                            {{--<img src="./assets/images/menu-icon/Alo.png" alt="Liên hệ"/>--}}
-                            {{--<span class="image-title">Liên hệ</span>--}}
-                            {{--</a>--}}
-                            {{--</li>--}}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
-    <!-- //MAIN NAVIGATION -->
-</div>
 
+    <!-- //MAIN NAVIGATION -->
+    <script>
+        function _money(str) {
+            str = str.split('').reverse().join('');
+            var tg = "";
+            var i = 0;
+            for (i; i < str.length; i++) {
+                tg += str[i];
+                if (i !== str.length - 1 && (i + 1) % 3 === 0) {
+                    tg += '.';
+                }
+            }
+            return tg.split('').reverse().join('');
+        }
+
+        var obj = [];
+        var ttien = 0;
+
+        function getCart() {
+            console.log(1);
+            $.get('/cart', function (data) {
+                console.log(data);
+                var str =
+                    '<div style="margin-left: 20px;display:flex;text-align: center;justify-content: space-between;">\n' +
+                    '    <div>\n' +
+                    '        <p>Ảnh</p>\n' +
+                    '    </div>\n' +
+                    '    <div ><p>Sản phẩm</p></div>\n' +
+                    '    <div><p>Số lượng</p></div>\n' +
+                    '    <div ><p>Thành tiền</p></div><div></div>\n' +
+                    '</div>';
+                var sl_mua = 0;
+                ttien = 0;
+                obj = [];
+                data.map(v => {
+                    sl_mua = $('#item-' + v.id).val() > 0 ? $('#item-' + v.id).val() : 1;
+                    ttien += v.gia * sl_mua;
+                    obj = [...obj, {...v, sl_mua: sl_mua, don_gia: v.gia * sl_mua}];
+                    str += '<div style="display:flex;text-align: center;justify-content: space-between;">\n' +
+                        '    <div>\n' +
+                        '        <img style="height: 50px; width: 50px" src="/uploads/product/' + v.hinh_anh + '" alt="ảnh">\n' +
+                        '    </div>\n' +
+                        '    <div>\n' +
+                        '        <p class="text-danger">' + v.ten_sp + '</p>\n' +
+                        '    </div>\n' +
+                        '    <div>\n' +
+                        '        <input style="width: 40px" onchange="getCart()" id="item-' + v.id + '" type="number" value="' + sl_mua + '">\n' +
+                        '    </div>\n' +
+                        '    <div>\n' +
+                        '        <p class="text-danger">' + _money((v.gia * sl_mua) + "") + 'đ</p>\n' +
+                        '    </div>\n' +
+                        '    <div>x</div>\n' +
+                        '</div>' +
+                        '';
+                });
+                str +=
+                    '<hr class="w-100">' +
+                    '<div style="display:flex;text-align: center;justify-content: space-between;">\n' +
+                    '    <div class="col-md-3">\n' +
+                    '       \n' +
+                    '    </div>\n' +
+                    '    <div class="col-md-3"></div>\n' +
+                    '    <div class="col-md-3"><p>Tổng tiền:</p></div>\n' +
+                    '    <div class="col-md-3"><p class="text-danger">' + _money(ttien + "") + 'đ</p></div><div></div>\n' +
+                    '</div>';
+                $('#data').html(str);
+            });
+        }
+    </script>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modall" style="padding-top: 25px">
+        <!-- Modal content -->
+        <div class="modal-contentt">
+            <span class="close">&times;</span>
+            <div>
+                <div style="text-align: center; border-bottom: 1px solid #CCCCCC">
+                    <h5>Giỏ hàng:</h5>
+                </div>
+                <div id="data">
+
+                </div>
+                <div class="form-group">
+                    <label for="">Họ & tên:</label>
+                    <input type="text" name="ten_kh" class="form-control w-100"
+                           placeholder="" aria-describedby="helpId" required>
+                </div>
+                <div style="display: flex">
+                    <div class="form-group" style="padding-right: 10px">
+                        <label for="">Điện thoại:</label>
+                        <input type="text" name="sdt" class="form-control"
+                               placeholder="" aria-describedby="helpId" required>
+                    </div>
+                    <div class="form-group" style="padding-left: 10px">
+                        <label for="">Email:</label>
+                        <input type="text" name="email" class="form-control"
+                               placeholder="" aria-describedby="helpId" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="">Địa chỉ:</label>
+                    <input type="text" name="dia_chi" class="form-control w-100"
+                           placeholder="" aria-describedby="helpId" required>
+                </div>
+                <div style="text-align: center" onclick="orderr()">
+                    <bttton class="btn btn-primary">Thanh toán</bttton>
+                </div>
+                <script>
+
+                    // Get the modal
+                    var modal = document.getElementById("myModal");
+
+                    // Get the button that opens the modal
+                    var btn = document.getElementById("myBtn");
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks the button, open the modal
+                    btn.onclick = function () {
+                        modal.style.display = "block";
+                        getCart();
+                    }
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+
+                    function inputNull(name, text) {
+                        if (name.trim() == '') {
+                            alert(text + ' không được để trông!');
+                            return true;
+                        }
+                        return false
+                    }
+
+                    function orderr() {
+                        if (ttien === 0 && obj.length <= 0) {
+                            alert("Giỏ hàng trống, vui lòng chọn sản phẩm!");
+                            return;
+                        }
+                        const name = $('input[name="ten_kh"]').val();
+                        if (inputNull(name, 'Họ & tên')) {
+                            return;
+                        }
+                        const email = $('input[name="email"]').val();
+                        if (inputNull(email, 'Email')) {
+                            return;
+                        }
+                        const phone = $('input[name="sdt"]').val();
+                        if (inputNull(phone, 'Điện thoại')) {
+                            return;
+                        }
+                        const address = $('input[name="dia_chi"]').val();
+                        if (inputNull(address, 'Địa chỉ')) {
+                            return;
+                        }
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.post('/orderCart', {
+                            ten_kh: name,
+                            email: email,
+                            sdt: phone,
+                            dia_chi: address,
+                            san_pham: obj,
+                            tong_tien: ttien
+                        }, function (data) {
+                            console.log(data);
+                            if (data == 1) {
+                                alert("Đặt hàng thành công, vui lòng chờ điện thoại xác nhận!");
+                                $('#exampleModalCenter').modal('hide');
+                            } else {
+                                alert("Đặt hàng thất bại, vui lòng thử lại!");
+                            }
+                        });
+                    }
+                </script>
+                <style>
+                    .form-group, .btn {
+                        font-size: 15px;
+                    }
+
+                    .form-control {
+                        /*height: calc(2.25rem + 10px) !important;*/
+                        padding: .5rem .75rem;
+                        font-size: 15px;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+</div>
 @yield('main')
 
 <footer id="t3-footer" class="wrap t3-footer">
@@ -419,10 +629,12 @@
                                         <ul>
                                             <li><a
                                                         href="https://docs.google.com/spreadsheets/d/1C5D0pXc52lihc9RJv9ueRCIyPyrbaiavHOqKJ2BfWDI/pubhtml?gid=767045968&amp;single=true"
-                                                        target="_blank">Danh sách đơn hàng đang Ship ở Hà Nội</a></li>
+                                                        target="_blank">Danh sách đơn hàng đang Ship ở Hà Nội</a>
+                                            </li>
                                             <li><a
                                                         href="https://docs.google.com/spreadsheets/d/1C5D0pXc52lihc9RJv9ueRCIyPyrbaiavHOqKJ2BfWDI/pubhtml?gid=0&amp;single=true"
-                                                        target="_blank">Danh sách đơn hàng đang chờ Ship ở Hà Nội</a>
+                                                        target="_blank">Danh sách đơn hàng đang chờ Ship ở Hà
+                                                    Nội</a>
                                             </li>
                                             <li><a href="/" target="_blank">Danh sách đơn hàng đang chờ
                                                     Ship ở TpHCM</a></li>
@@ -464,7 +676,8 @@
                                          data-hide-cover="false" data-show-facepile="true">
                                         <blockquote cite="https://www.facebook.com/GomHang/"
                                                     class="fb-xfbml-parse-ignore"><a
-                                                    href="https://www.facebook.com/GomHang/">GomHang.vn - khách hàng có
+                                                    href="https://www.facebook.com/GomHang/">GomHang.vn - khách hàng
+                                                có
                                                 quyền được an tâm</a>
                                         </blockquote>
                                     </div>
@@ -502,7 +715,8 @@
                         <p><a href="cskh/145-chinh-sach-bao-mat.html" target="_blank">Chính sách bảo mật</a> | <a
                                     href="cskh/149-chinh-sach-bao-hanh-2015.html" target="_blank">Chính sách bảo
                                 hành</a>&nbsp;| <a
-                                    href="huong-dan-mua-hang/item/2-thong-tin-tai-khoan.html" target="_blank">Tài khoản
+                                    href="huong-dan-mua-hang/item/2-thong-tin-tai-khoan.html" target="_blank">Tài
+                                khoản
                                 ngân
                                 hàng</a>&nbsp;| Giấy phép kinh doanh số 8335646008, <a
                                     href="http://www.online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=5053"

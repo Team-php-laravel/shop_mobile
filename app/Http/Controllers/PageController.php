@@ -82,4 +82,40 @@ class PageController extends Controller
         return 1;
     }
 
+    public function cart(Request $request)
+    {
+        $cart = \Session::get('cart') ?: [];
+        array_push($cart, $request->id);
+        \Session::put('cart', array_unique($cart));
+
+        return 1;
+    }
+
+    public function orderCart(Request $request)
+    {
+        $kh = khach_hang::updateOrCreate(['ten_kh' => $request->ten_kh, 'email' => $request->email, 'dien_thoai' => $request->dien_thoai], ['dia_chi' => $request->dia_chi]);
+        $hd = hoa_don::create([
+            'khach_hang_id' => $kh->id,
+            'tong_tien' => $request->tong_tien,
+            'create_by' => Auth::user()->id
+        ]);
+
+        foreach ($request->san_pham as $item) {
+            cthd::create([
+                'hoa_don_id' => $hd->id,
+                'san_pham_id' => $item['id'],
+                'sl_mua' => $item['sl_mua'],
+                'don_gia' => $item['don_gia'],
+            ]);
+        }
+
+        return 1;
+    }
+
+    public function getCart()
+    {
+        $cart = \Session::get('cart') ?: [];
+        $sp = san_pham::whereIn('id', $cart)->get();
+        return $sp;
+    }
 }

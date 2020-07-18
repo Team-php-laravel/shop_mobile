@@ -224,7 +224,7 @@
 
                         function sl(id) {
                             san_pham = san_pham.map(v => (v.id === id ? {
-                                ...v, sl_mua: controlSl(v.so_luong, $('#sl-' + id).val())
+                                ...v, sl_mua: $('#sl-' + id).val()
                             } : v));
                             manny = 0;
                             giam_gia = 0;
