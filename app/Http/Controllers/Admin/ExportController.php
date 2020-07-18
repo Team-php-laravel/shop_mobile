@@ -109,11 +109,16 @@ class ExportController extends Controller
     {
         try {
             $cthd = cthd::where('hd_id', $id);
-            foreach ($cthd->get() as $val) {
-                $san_pham = san_pham::findOrFail($val->sp_id);
-                $san_pham->update(['so_luong' => ($san_pham->so_luong + $val->so_luong)]);
+            if(isset($request->create)){
+                $cthd->delete();
+
+            }else{
+                foreach ($cthd->get() as $val) {
+                    $san_pham = san_pham::findOrFail($val->sp_id);
+                    $san_pham->update(['so_luong' => ($san_pham->so_luong + $val->so_luong)]);
+                }
+                $cthd->delete();
             }
-            $cthd->delete();
 
             if (isset($request->id_kh)) {
                 $temp = substr($request->id_kh, 0, 2);

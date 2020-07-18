@@ -184,7 +184,8 @@
                                     method: 'PUT',
                                     data: {
                                         manny: manny,
-                                        san_pham: san_pham
+                                        san_pham: san_pham,
+                                        create: true
                                     }
                                 }).done(function () {
                                     alert("Giao dịch thành công!");
