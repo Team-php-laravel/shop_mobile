@@ -69,7 +69,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="pay({{$store->id}})">Thanh toán
+                    <button type="button" class="btn btn-sm btn-danger" onclick="pay({{$store->id}})">Nhập hàng
                     </button>
                 </td>
             </tr>
@@ -83,8 +83,8 @@
                     <th class="bg-primary">STT</th>
                     <th class="bg-primary">Tên sản phẩm</th>
                     <th class="bg-primary">Số lượng mua</th>
-                    <th class="bg-primary">Giảm giá</th>
                     <th class="bg-primary">Đơn giá</th>
+                    <th class="bg-primary">Thành tiền</th>
                     <th class="bg-primary">
                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal">
                             +Thêm
@@ -118,7 +118,6 @@
                         <tr class="bg-primary">
                             <th>Tên sản phẩm</th>
                             <th>Số lượng</th>
-                            <th>Giảm giá</th>
                             <th>Đơn giá</th>
                             <th></th>
                         </tr>
@@ -128,7 +127,6 @@
                             <tr>
                                 <td>{{$val->ten_sp}}</td>
                                 <td>{{$val->so_luong}}</td>
-                                <td>{{$val->giam_gia}}%</td>
                                 <td>{{_manny($val->gia)}} vnđ</td>
                                 <td>
                                     <button type="button" id="sp-{{$val->id}}" class="btn btn-sm btn-success"
@@ -158,18 +156,27 @@
                             return tg.split('').reverse().join('');
                         }
 
+                        function fManny(id) {
+                            san_pham = san_pham.map(v => (v.id === id ? {
+                                ...v, gia: $('#gia-' + id).val()
+                            } : v));
+                            manny = 0;
+                            giam_gia = 0;
+                            printf();
+                        }
+
                         function printf() {
                             var str = "";
                             var i;
                             for (i = 0; i < san_pham.length; i++) {
                                 manny += ((100 - san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
-                                giam_gia += ((san_pham[i].giam_gia) * san_pham[i].gia / 100) * san_pham[i].sl_mua;
+                                giam_gia += 0;
                                 str += "<tr>\n" +
                                     "<td>" + (i + 1) + "</td>\n" +
                                     "<td class=\"text-left\">" + san_pham[i].ten_sp + "</td>\n" +
-                                    "<td><input style=\"width: 50px;\" onchange=\"sl(" + san_pham[i].id + ")\" id='sl-" + san_pham[i].id + "' type=\"number\" value=\"" + san_pham[i].sl_mua + "\"></td>\n" +
-                                    "<td>" + san_pham[i].giam_gia + "%</td>\n" +
-                                    "<td>" + _manny("" + (100 - san_pham[i].giam_gia) * san_pham[i].gia / 100 * san_pham[i].sl_mua) + " vnđ</td>\n" +
+                                    "<td><input style=\"width: 100px;\" onchange=\"sl(" + san_pham[i].id + ")\" id='sl-" + san_pham[i].id + "' type=\"number\" value=\"" + san_pham[i].sl_mua + "\"></td>\n" +
+                                    "<td><input type='number' onchange='fManny(" + san_pham[i].id + ")' id='gia-" + san_pham[i].id + "' value='" + san_pham[i].gia + "'> vnđ</td>\n" +
+                                    "<td>" + _manny("" + (san_pham[i].gia * san_pham[i].sl_mua)) + " vnđ</td>\n" +
                                     "<td>\n" +
                                     "    <button type=\"button\" onclick=\"del(" + san_pham[i].id + ")\" id='del-" + san_pham[i].id + "' class=\"btn btn-sm btn-danger\">Xóa</button>\n" +
                                     "</td>\n" +
@@ -267,7 +274,8 @@
                     san_pham.push({
                         ...data.sp[i].san_pham,
                         sl_mua: data.sp[i].so_luong,
-                        so_luong: data.sp[i].so_luong + data.sp[i].san_pham.so_luong
+                        so_luong: data.sp[i].so_luong + data.sp[i].san_pham.so_luong,
+                        gia: data.sp[i].gia
                     });
                 }
                 printf();
