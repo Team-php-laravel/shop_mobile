@@ -23,7 +23,7 @@ class hoa_don extends Model
 
     public function cthd()
     {
-        return $this->belongsTo(cthd::class, 'id', 'hd_id');
+        return $this->hasMany(cthd::class, 'hd_id', 'id');
     }
 
 }

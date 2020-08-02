@@ -54,12 +54,18 @@
                         <p>Địa chỉ: {{$val->khach_hang->dia_chi}}</p>
                     </td>
                     <td style="min-width: 300px" class="text-left">
-                        <p>Sản phẩm: {{\App\san_pham::find($val->cthd->sp_id)->ten_sp}}</p>
-                        <p>Số lượng: {{$val->cthd->so_luong}}</p>
-                        <p>Đơn giá: {{_manny($val->cthd->don_gia)}} VNĐ</p>
+                        @foreach($val->cthd as $item)
+                            <p>Sản phẩm: {{\App\san_pham::find($item->sp_id)->ten_sp}}</p>
+                            <p>Số lượng: {{$item->so_luong}}</p>
+                            <p>Đơn giá: {{_manny($item->don_gia)}} VNĐ</p>
+                            <br>
+                        @endforeach
+
                     </td>
                     <td style="min-width: 150px">
-                        {{date_format(date_create($val['created_at']), "H:i d/m/yy")}}<br>
+                        @if(!is_null($val->ngay_tao))
+                            {{date_format(date_create($val->ngay_tao), "H:i d/m/yy")}}<br>
+                        @endif
                         <span style="color: silver">{{$val->user ? $val->user->name: ''}}</span>
                     </td>
                     <td style="min-width: 100px">{{_manny($val->tong_gia)}} VNĐ</td>
