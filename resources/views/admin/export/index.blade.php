@@ -109,6 +109,8 @@
                         sum += (data.cthd[i].san_pham).gia * data.cthd[i].so_luong;
                         manny += ((data.cthd[i].san_pham).gia * (100 - (data.cthd[i].san_pham).giam_gia) / 100) * data.cthd[i].so_luong;
 
+                        console.log(manny);
+
                         str += "<tr>\n" +
                             "<td>" + (i + 1) + "</td>\n" +
                             "<td>" + (data.cthd[i].san_pham).ten_sp + "</td>\n" +

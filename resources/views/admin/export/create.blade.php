@@ -232,8 +232,8 @@
                                 for (var i = 0; i < data.cthd.length; i++) {
                                     san_pham.push({
                                         ...data.cthd[i].san_pham,
-                                        sl_mua: data.cthd[i].so_luong,
-                                        so_luong: data.cthd[i].so_luong + data.cthd[i].san_pham.so_luong
+                                        sl_mua: controlSl(data.cthd[i].san_pham.so_luong, data.cthd[i].so_luong),
+                                        so_luong: data.cthd[i].san_pham.so_luong
                                     });
                                 }
                                 printf();

@@ -141,7 +141,7 @@ class ExportController extends Controller
                     $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
                 }
             } else {
-                hoa_don::findOrFail($id)->update(['type_id' => 1]);
+                hoa_don::findOrFail($id)->update(['type_id' => 1, 'tong_gia' => $request->manny]);
                 foreach ($request->san_pham as $val) {
                     cthd::create(['hd_id' => $id, 'sp_id' => $val['id'], 'so_luong' => $val['sl_mua'], 'don_gia' => $val['sl_mua'] * ($val['gia'] - $val['gia'] * $val['giam_gia'] / 100)]);
                     $sp = san_pham::find($val['id']);
