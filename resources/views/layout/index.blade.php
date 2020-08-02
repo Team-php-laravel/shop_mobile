@@ -359,7 +359,8 @@
                     <bttton class="btn btn-primary" onclick="orderr()">Thanh toán</bttton>
                 </div>
                 <div id="stk" style="display: none; text-align: center">
-                    Techcombank: 19128325224018
+                    Techcombank: 19128325224018 <br>
+                    Chủ tài khoản: Bùi Hồng Đăng
                 </div>
                 <script>
 

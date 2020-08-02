@@ -189,7 +189,7 @@
 
                         function book(obj) {
                             $('#sp-' + obj.id).hide();
-                            san_pham.push({...obj, sl_mua: 1});
+                            san_pham.push({...obj, sl_mua: 1, gia: 0});
                             manny = 0;
                             giam_gia = 0;
                             printf();
